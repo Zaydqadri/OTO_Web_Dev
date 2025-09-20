@@ -1,6 +1,7 @@
 ﻿"use client";
 import { useEffect, useMemo, useState } from "react";
 import type { Listing } from "@/lib/types";
+import Loadable from "next/dist/shared/lib/loadable.shared-runtime";
 
 type Sort = { key: keyof Listing; dir: "asc" | "desc" };
 
@@ -31,7 +32,7 @@ export default function ListingsTable() {
       .filter(r => {
         const matchesText = !t || Object.values(r).join(" ").toLowerCase().includes(t);
         const matchesArea = area === "All" || r.area === area;
-        const matchesAcc  = acc === "All" || (r.accommodations ?? "").toLowerCase().includes(acc.toLowerCase());
+        const matchesAcc = acc === "All" || (r.accommodations ?? "").toLowerCase().includes(acc.toLowerCase());
         return matchesText && matchesArea && matchesAcc;
       })
       .sort((a, b) => {
@@ -52,16 +53,16 @@ export default function ListingsTable() {
           className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 min-w-56 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           placeholder="Search…"
           value={q}
-          onChange={(e)=>setQ(e.target.value)}
+          onChange={(e) => setQ(e.target.value)}
         />
         <select
           className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          value={area} onChange={(e)=>setArea(e.target.value)}>
+          value={area} onChange={(e) => setArea(e.target.value)}>
           {areas.map(a => <option key={a}>{a}</option>)}
         </select>
         <select
           className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          value={acc} onChange={(e)=>setAcc(e.target.value)}>
+          value={acc} onChange={(e) => setAcc(e.target.value)}>
           {accs.map(a => <option key={a}>{a}</option>)}
         </select>
       </div>
@@ -70,22 +71,37 @@ export default function ListingsTable() {
       <div className="overflow-x-auto rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
         <table className="w-full text-left">
           <thead className="border-b bg-[var(--brand-50)]/60 text-[var(--brand)]">
-            {(["type","category","city","area","accommodations","startDate"] as (keyof Listing)[])
-              .map(col => (
-              <th
-                key={col as string}
-                className="px-3 py-3 cursor-pointer select-none text-sm font-semibold"
-                onClick={()=>toggleSort(col)}
-                title="Click to sort"
-              >
-                {col} {sort.key===col ? (sort.dir==="asc"?"▲":"▼") : ""}
+            <tr>
+              {[
+                {key: "title", label: "Title"},
+                { key: "type", label: "Type" },
+                { key: "category", label: "Category" },
+                { key: "city", label: "City" },
+                { key: "area", label: "Area" },
+                { key: "accommodations", label: "Accommodations" },
+                { key: "startDate", label: "Start Date" },
+              ].map(({ key, label }) => (
+                <th
+                  key={key}
+                  scope="col"
+                  className="px-3 py-3 cursor-pointer select-none text-sm font-semibold"
+                  onClick={() => toggleSort(key as keyof Listing)}
+                  title="Click to sort"
+                >
+                  {label} {sort.key === key ? (sort.dir === "asc" ? "▲" : "▼") : ""}
+                </th>
+              ))}
+              <th scope="col" className="px-3 py-3 text-sm font-semibold">
+                Contact
               </th>
-            ))}
-            <th className="px-3 py-3 text-sm font-semibold">Contact</th>
+            </tr>
           </thead>
+
+
           <tbody>
             {filtered.map((r, i) => (
               <tr key={i} className="border-b">
+                <td className="px-3 py-3">{r.title}</td>
                 <td className="px-3 py-3">{r.type}</td>
                 <td className="px-3 py-3">
                   {r.category ? (
@@ -99,10 +115,10 @@ export default function ListingsTable() {
                 <td className="px-3 py-3">
                   {r.accommodations
                     ? r.accommodations.split(",").map(s => s.trim()).filter(Boolean).map((s, j) => (
-                        <span key={j} className={`${chip} mr-1 mb-1 border-[color:rgb(0_0_0_/_0.10)] text-[var(--ink)]/80`}>
-                          {s}
-                        </span>
-                      ))
+                      <span key={j} className={`${chip} mr-1 mb-1 border-[color:rgb(0_0_0_/_0.10)] text-[var(--ink)]/80`}>
+                        {s}
+                      </span>
+                    ))
                     : "-"}
                 </td>
                 <td className="px-3 py-3">{r.startDate ?? "-"}</td>

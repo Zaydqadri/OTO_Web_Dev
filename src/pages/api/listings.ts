@@ -10,10 +10,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // TODO: replace with Google Sheet/Airtable/Supabase
   const data: Listing[] = [
-    { type: "Masjid", category: "Taraweeh", city: "Toronto", area: "Scarborough",
+    { title: "Hafiz Needed", type: "Masjid", category: "Taraweeh", city: "Toronto", area: "Scarborough",
       accommodations: "Housing, Meals", startDate: "2025-03-01",
       contactName: "Admin", contactEmail: "admin@example.com", approved: true },
-    { type: "Hafiz", category: "Taraweeh", city: "Mississauga", area: "Erin Mills",
+    { title: "Teaching in Missisauga", type: "Hafiz", category: "Teaching", city: "Mississauga", area: "Erin Mills",
       accommodations: "Stipend", startDate: "2025-03-10",
       contactName: "Coordinator", contactEmail: "c@example.com", approved: true },
   ];

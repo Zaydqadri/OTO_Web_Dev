@@ -1,4 +1,5 @@
 ﻿export type Listing = {
+  title: string;
   type: "Masjid" | "Hafiz" | string;
   category?: "Taraweeh" | "Jummah" | "Teaching" | string;
   city?: string;
