@@ -1,14 +1,10 @@
-# Masjid Network Website
+# OTO Website
 
-A simple community-driven platform for connecting **Masājid** with **Ḥuffāẓ** for Tarāwīḥ, Jumu‘ah, teaching, and more.  
-Built with **Next.js (Pages Router) + TypeScript + Tailwind CSS**.
 
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) **18+**
+- [Node.js](https://nodejs.org/) **Version 18+**
 - npm (ships with Node)
 - [Visual Studio Code](https://code.visualstudio.com/) (recommended editor with Tailwind & TypeScript extensions)
 
@@ -16,7 +12,7 @@ Built with **Next.js (Pages Router) + TypeScript + Tailwind CSS**.
 Clone the repo and install dependencies:
 ```bash
 git clone <your-repo-url>
-cd masjid-network
+cd into directory
 npm install
 ```
 
