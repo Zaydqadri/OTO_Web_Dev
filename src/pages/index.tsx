@@ -16,7 +16,7 @@
           </a>
           <a href="/apply"
              className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-white px-4 py-2 text-[var(--ink)] hover:bg-[var(--brand-50)]">
-            Submit an Yusuf
+            Submit an Application
           </a>
         </div>
       </div>
