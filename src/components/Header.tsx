@@ -11,8 +11,8 @@ export default function Header() {
           <Image
             src="/logo.jpeg"
             alt="Ontario Taraweeh Outreach Logo"
-            width={140}   // tweak width for clarity
-            height={40}
+            width={280}   // tweak width for clarity
+            height={80}
             priority
             className="h-16 w-auto" // ensures consistent height with auto width
           />
