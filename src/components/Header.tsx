@@ -14,7 +14,7 @@ export default function Header() {
             width={140}   // tweak width for clarity
             height={40}
             priority
-            className="h-16 w-auto" // ensures consistent height with auto width
+            className="h-22 w-auto" // ensures consistent height with auto width
           />
         </Link>
         <nav className="flex gap-1">
