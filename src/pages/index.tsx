@@ -12,11 +12,11 @@
         <div className="mt-6 flex flex-wrap gap-3">
           <a href="/listings"
              className="inline-flex items-center rounded-xl border border-[var(--brand)] bg-[var(--brand)] px-4 py-2 text-white">
-            Browse listings
+            Browse listings for Everything
           </a>
           <a href="/apply"
              className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-white px-4 py-2 text-[var(--ink)] hover:bg-[var(--brand-50)]">
-            Submit A lot of things
+            Submit a lot of things
           </a>
         </div>
       </div>
