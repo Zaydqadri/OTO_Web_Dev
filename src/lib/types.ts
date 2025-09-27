@@ -1,15 +1,15 @@
 ﻿export type Listing = {
   title: string;
-  type: "Masjid" | "Hafiz" | string;
+  description?: string;            
+  address: string;
   category?: "Taraweeh" | "Jummah" | "Teaching" | string;
   city?: string;
-  area?: string;
-  accommodations?: string; // "housing, meals, stipend"
+  notes?: string;
+  attendance?: string;
+  accommodations?: string; // "housing, meals"
   startDate?: string;
   endDate?: string;
   contactName?: string;
   contactEmail?: string;
   approved?: boolean;
-  lat?: number;
-  lng?: number;
 };
