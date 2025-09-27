@@ -1,13 +1,15 @@
 ﻿"use client";
 import { useEffect, useMemo, useState } from "react";
 import type { Listing } from "@/lib/types";
-import Loadable from "next/dist/shared/lib/loadable.shared-runtime";
+import type { ReactNode } from "react";
+import Link from "next/link";
 
-type Sort = { key: keyof Listing; dir: "asc" | "desc" };
+type SortKey = keyof Listing;
+type Sort = { key: SortKey; dir: "asc" | "desc" };
 
 const chip = "inline-flex items-center rounded-full border px-2 py-0.5 text-xs";
 
-export default function ListingsTable() {
+export default function ListingsTable({ category }: { category?: string }) {
   const [rows, setRows] = useState<Listing[]>([]);
   const [q, setQ] = useState("");
   const [area, setArea] = useState("All");
@@ -16,23 +18,49 @@ export default function ListingsTable() {
 
   useEffect(() => { fetch("/api/listings").then(r => r.json()).then(setRows); }, []);
 
-  const areas = useMemo(
-    () => ["All", ...new Set(rows.map(r => r.area).filter(Boolean) as string[])],
-    [rows]
-  );
-  const accs = useMemo(
-    () => ["All", ...new Set(rows.flatMap(r => (r.accommodations ?? "")
-      .split(",").map(s => s.trim()).filter(Boolean)))],
-    [rows]
+  // options
+  const baseRows = useMemo(
+    () =>
+      category
+        ? rows.filter(
+          r => (r.category || "").toLowerCase() === category.toLowerCase()
+        )
+        : rows,
+    [rows, category]
   );
 
+  // options scoped to baseRows
+  const areas = useMemo(
+    () => ["All", ...new Set(baseRows.map(r => r.notes).filter(Boolean) as string[])],
+    [baseRows]
+  );
+
+  const accs = useMemo(
+    () =>
+      ["All", ...new Set(
+        baseRows.flatMap(r => (r.accommodations ?? "")
+          .split(",")
+          .map(s => s.trim())
+          .filter(Boolean))
+      )],
+    [baseRows]
+  );
+
+  // filtering + sorting
   const filtered = useMemo(() => {
     const t = q.toLowerCase();
-    return rows
+    return baseRows
       .filter(r => {
-        const matchesText = !t || Object.values(r).join(" ").toLowerCase().includes(t);
-        const matchesArea = area === "All" || r.area === area;
-        const matchesAcc = acc === "All" || (r.accommodations ?? "").toLowerCase().includes(acc.toLowerCase());
+        const matchesText =
+          !t ||
+          [r.title, r.city, r.notes, r.category, r.description, r.accommodations]
+            .join(" ")
+            .toLowerCase()
+            .includes(t);
+        const matchesArea = area === "All" || r.notes === area;
+        const matchesAcc =
+          acc === "All" ||
+          (r.accommodations ?? "").toLowerCase().includes(acc.toLowerCase());
         return matchesText && matchesArea && matchesAcc;
       })
       .sort((a, b) => {
@@ -40,105 +68,129 @@ export default function ListingsTable() {
         const B = (b[sort.key] ?? "").toString().toLowerCase();
         return sort.dir === "asc" ? A.localeCompare(B) : B.localeCompare(A);
       });
-  }, [rows, q, area, acc, sort]);
+  }, [baseRows, q, area, acc, sort]);
 
-  const toggleSort = (key: keyof Listing) =>
+
+  const toggleSort = (key: SortKey) =>
     setSort(s => (s.key === key ? { key, dir: s.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" }));
 
   return (
     <section className="mx-auto max-w-6xl">
       {/* Controls */}
-      <div className="mb-4 flex flex-wrap gap-3">
+      <div className="mb-4 flex flex-wrap gap-3 items-center">
         <input
           className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 min-w-56 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          placeholder="Search…"
+          placeholder={`Search ${category ? category : "listings"}…`}
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
-        <select
-          className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          value={area} onChange={(e) => setArea(e.target.value)}>
-          {areas.map(a => <option key={a}>{a}</option>)}
-        </select>
-        <select
-          className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          value={acc} onChange={(e) => setAcc(e.target.value)}>
-          {accs.map(a => <option key={a}>{a}</option>)}
-        </select>
+
+        {/* optional sorter */}
+        <div className="ml-auto flex items-center gap-2 text-sm">
+          <span className="text-[var(--muted)]">Sort by</span>
+          <select
+            className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-2 py-1"
+            value={String(sort.key)}
+            onChange={(e) => toggleSort(e.target.value as SortKey)}
+          >
+            <option value="city">City</option>
+            <option value="startDate">Start Date</option>
+            <option value="title">Title</option>
+          </select>
+
+        </div>
+        <Link
+          href="/apply"
+          className="ml-3 px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-dark)] transition-colors"
+        >
+          Submit a Listing
+        </Link>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
-        <table className="w-full text-left">
-          <thead className="border-b bg-[var(--brand-50)]/60 text-[var(--brand)]">
-            <tr>
-              {[
-                {key: "title", label: "Title"},
-                { key: "type", label: "Type" },
-                { key: "category", label: "Category" },
-                { key: "city", label: "City" },
-                { key: "area", label: "Area" },
-                { key: "accommodations", label: "Accommodations" },
-                { key: "startDate", label: "Start Date" },
-              ].map(({ key, label }) => (
-                <th
-                  key={key}
-                  scope="col"
-                  className="px-3 py-3 cursor-pointer select-none text-sm font-semibold"
-                  onClick={() => toggleSort(key as keyof Listing)}
-                  title="Click to sort"
-                >
-                  {label} {sort.key === key ? (sort.dir === "asc" ? "▲" : "▼") : ""}
-                </th>
-              ))}
-              <th scope="col" className="px-3 py-3 text-sm font-semibold">
-                Contact
-              </th>
-            </tr>
-          </thead>
+      {/* Accordion list */}
+      <div className="space-y-3">
+        {filtered.map((r, i) => (
+          <details key={i} className="group rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
+            <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-wrap items-center gap-2 sm:gap-3">
+              {/* Title • City */}
+              <span className="font-semibold text-[var(--ink)]">
+                {r.title}{r.city ? ` • ${r.city}` : ""}
+              </span>
 
+              {/* Category pill */}
+              {r.category && (
+                <span className={`${chip} border-[var(--brand)]/30 text-[var(--brand)] bg-[var(--brand-50)]/60`}>
+                  {r.category}
+                </span>
+              )}
 
-          <tbody>
-            {filtered.map((r, i) => (
-              <tr key={i} className="border-b">
-                <td className="px-3 py-3">{r.title}</td>
-                <td className="px-3 py-3">{r.type}</td>
-                <td className="px-3 py-3">
-                  {r.category ? (
-                    <span className={`${chip} border-[var(--brand)]/30 text-[var(--brand)] bg-[var(--brand-50)]/60`}>
-                      {r.category}
-                    </span>
-                  ) : "-"}
-                </td>
-                <td className="px-3 py-3">{r.city ?? "-"}</td>
-                <td className="px-3 py-3">{r.area ?? "-"}</td>
-                <td className="px-3 py-3">
-                  {r.accommodations
-                    ? r.accommodations.split(",").map(s => s.trim()).filter(Boolean).map((s, j) => (
-                      <span key={j} className={`${chip} mr-1 mb-1 border-[color:rgb(0_0_0_/_0.10)] text-[var(--ink)]/80`}>
-                        {s}
-                      </span>
-                    ))
-                    : "-"}
-                </td>
-                <td className="px-3 py-3">{r.startDate ?? "-"}</td>
-                <td className="px-3 py-3">
-                  <div className="font-medium">{r.contactName ?? "-"}</div>
-                  {r.contactEmail && (
-                    <a className="text-[var(--brand)] underline" href={`mailto:${r.contactEmail}`}>
-                      {r.contactEmail}
+              {/* expand icon */}
+              <span className="ml-auto text-[var(--muted)] transition-transform group-open:rotate-180">⌄</span>
+            </summary>
+
+            <div className="px-4 sm:px-5 pb-5 pt-0 text-[var(--ink)]/90">
+              {/* Description */}
+              {r.description && (
+                <p className="mb-3">{r.description}</p>
+              )}
+
+              {/* Meta grid */}
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <Field label="Address" value={r.address} />
+                <Field label="Average Attendance" value={r.attendance} />
+                <Field label="Notes" value={r.notes} />
+                <Field label="Accommodations" value={r.accommodations} />
+                <Field label="Start Date" value={fmtDate(r.startDate)} />
+                <Field label="Contact" value={
+                  r.contactEmail ? (
+                    <a className="underline text-[var(--brand)]" href={`mailto:${r.contactEmail}`}>
+                      {r.contactName || r.contactEmail}
                     </a>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  ) : (r.contactName ?? "-")
+                } />
+              </div>
+            </div>
+          </details>
+        ))}
 
         {filtered.length === 0 && (
-          <div className="p-6 text-[var(--muted)]">No listings found.</div>
+          <div className="p-6 text-[var(--muted)] rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
+            No listings found.
+          </div>
         )}
       </div>
     </section>
   );
+}
+
+/** helpers */
+type FieldProps = { label: string; value?: ReactNode };
+
+// Returns null (renders nothing) if the value is empty/blank
+function Field({ label, value }: FieldProps) {
+  const isEmpty =
+    value == null ||
+    (typeof value === "string" && value.trim() === "") ||
+    (Array.isArray(value) && value.length === 0);
+
+  if (isEmpty) return null;
+
+  return (
+    <div className="rounded-xl border border-[color:rgb(0_0_0_/_0.06)] p-3 bg-white">
+      <div className="text-xs font-semibold text-[var(--muted)]">{label}</div>
+      <div className="text-sm">{value}</div>
+    </div>
+  );
+}
+
+
+function fmtDate(d?: string) {
+  if (!d) return "";
+  // Expecting "YYYY-MM-DD"
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d);
+  if (!m) return d;
+  const [, y, mm, dd] = m;
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthName = months[Number(mm) - 1] ?? mm;
+  return `${monthName} ${Number(dd)}, ${y}`;
 }
