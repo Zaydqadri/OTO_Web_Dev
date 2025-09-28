@@ -30,7 +30,7 @@ export default function ListingsTable({ category }: { category?: string }) {
   );
 
   // options scoped to baseRows
-  const areas = useMemo(
+  const notes = useMemo(
     () => ["All", ...new Set(baseRows.map(r => r.notes).filter(Boolean) as string[])],
     [baseRows]
   );
@@ -53,15 +53,14 @@ export default function ListingsTable({ category }: { category?: string }) {
       .filter(r => {
         const matchesText =
           !t ||
-          [r.title, r.city, r.notes, r.category, r.description, r.accommodations]
+          [r.title, r.city, r.notes, r.category, r.description, r.accommodations, r.attendance]
             .join(" ")
             .toLowerCase()
             .includes(t);
-        const matchesArea = area === "All" || r.notes === area;
         const matchesAcc =
           acc === "All" ||
           (r.accommodations ?? "").toLowerCase().includes(acc.toLowerCase());
-        return matchesText && matchesArea && matchesAcc;
+        return matchesText && matchesAcc;
       })
       .sort((a, b) => {
         const A = (a[sort.key] ?? "").toString().toLowerCase();
@@ -124,9 +123,36 @@ export default function ListingsTable({ category }: { category?: string }) {
                 </span>
               )}
 
-              {/* expand icon */}
-              <span className="ml-auto text-[var(--muted)] transition-transform group-open:rotate-180">⌄</span>
+              {/* Availability status */}
+              {r.available && (
+                <span
+                  className={`${chip} ${r.available === "Open"
+                    ? "border-green-500 text-green-700 bg-green-50"
+                    : "border-red-500 text-red-700 bg-red-50"
+                    }`}
+                >
+                  {r.available === "Open" ? "Open" : "Filled"}
+                </span>
+              )}
+
+              {/* Nicer expand icon */}
+              <span className="ml-auto flex h-6 w-6 items-center justify-center rounded-full border border-[var(--muted)]/30 text-[var(--muted)] transition-transform duration-300 group-open:rotate-180">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="h-4 w-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
             </summary>
+
+
 
             <div className="px-4 sm:px-5 pb-5 pt-0 text-[var(--ink)]/90">
               {/* Description */}
@@ -141,13 +167,34 @@ export default function ListingsTable({ category }: { category?: string }) {
                 <Field label="Notes" value={r.notes} />
                 <Field label="Accommodations" value={r.accommodations} />
                 <Field label="Start Date" value={fmtDate(r.startDate)} />
-                <Field label="Contact" value={
-                  r.contactEmail ? (
-                    <a className="underline text-[var(--brand)]" href={`mailto:${r.contactEmail}`}>
-                      {r.contactName || r.contactEmail}
-                    </a>
-                  ) : (r.contactName ?? "-")
-                } />
+                {/* Contact info only if not filled */}
+                {r.available !== "Filled" && (
+                  <Field
+                    label="Contact"
+                    value={
+                      r.contactNumber || r.contactEmail ? (
+                        <>
+                          {r.contactNumber && <div>{r.contactNumber}</div>}
+                          {r.contactEmail && (
+                            <a
+                              className="underline text-[var(--brand)]"
+                              href={`mailto:${r.contactEmail}`}
+                            >
+                              {r.contactEmail}
+                            </a>
+                          )}
+                        </>
+                      ) : (
+                        <a href="/contact" className="underline text-[var(--brand)]">
+                          Contact Us For More Details
+                        </a>
+                      )
+                    }
+                  />
+                )}
+
+
+
               </div>
             </div>
           </details>

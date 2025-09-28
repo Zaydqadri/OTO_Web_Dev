@@ -6,10 +6,11 @@
   city?: string;
   notes?: string;
   attendance?: string;
-  accommodations?: string; // "housing, meals"
+  accommodations?: string; // "lodging, meals"
   startDate?: string;
   endDate?: string;
-  contactName?: string;
+  contactNumber?: string;
   contactEmail?: string;
+  available: "Open" | "Filled";
   approved?: boolean;
 };

@@ -18,8 +18,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       notes: "",
       accommodations: "Housing, Meals",
       startDate: "2025-03-01",
-      contactName: "Admin",
+      contactNumber: "Admin",
       contactEmail: "admin@example.com",
+      available: "Filled",
       approved: true
     },
     {
@@ -31,8 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       notes: "Erin Mills",
       accommodations: "Stipend",
       startDate: "2025-03-10",
-      contactName: "Coordinator",
+      contactNumber: "Coordinator",
       contactEmail: "c@example.com",
+      available: "Filled",
       approved: true
     },
       {
@@ -45,8 +47,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       attendance: "500",
       accommodations: "N/A",
       startDate: "",
-      contactName: "",
+      contactNumber: "",
       contactEmail: "",
+      available: "Open",
       approved: true
     },
   ];
