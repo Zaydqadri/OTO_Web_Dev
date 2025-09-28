@@ -147,7 +147,6 @@ export default function Header() {
   );
 }
 
-/* Small chevron that rotates */
 function ChevronDown({ open }: { open: boolean }) {
   return (
     <svg

@@ -29,23 +29,6 @@ export default function ListingsTable({ category }: { category?: string }) {
     [rows, category]
   );
 
-  // options scoped to baseRows
-  const notes = useMemo(
-    () => ["All", ...new Set(baseRows.map(r => r.notes).filter(Boolean) as string[])],
-    [baseRows]
-  );
-
-  const accs = useMemo(
-    () =>
-      ["All", ...new Set(
-        baseRows.flatMap(r => (r.accommodations ?? "")
-          .split(",")
-          .map(s => s.trim())
-          .filter(Boolean))
-      )],
-    [baseRows]
-  );
-
   // filtering + sorting
   const filtered = useMemo(() => {
     const t = q.toLowerCase();
@@ -167,7 +150,6 @@ export default function ListingsTable({ category }: { category?: string }) {
                 <Field label="Notes" value={r.notes} />
                 <Field label="Accommodations" value={r.accommodations} />
                 <Field label="Start Date" value={fmtDate(r.startDate)} />
-                {/* Contact info only if not filled */}
                 {r.available !== "Filled" && (
                   <Field
                     label="Contact"

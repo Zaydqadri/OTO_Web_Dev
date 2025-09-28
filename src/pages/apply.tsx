@@ -5,7 +5,6 @@
     <section className="mx-auto max-w-4xl px-4 py-12">
       <h1 className="text-3xl font-bold text-[var(--brand)] mb-4">Apply</h1>
 
-      {/* WhatsApp-style blurb */}
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white p-5 mb-6">
         <p className="text-[var(--ink)]/90">
           If you are interested and have not filled in our form for this year, please do so below to receive further details.
@@ -25,7 +24,6 @@
         </a>
       </div>
 
-      {/* Embedded form (falls back to the link above if a browser blocks iframe) */}
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white p-3">
         <div className="aspect-[3/4] w-full overflow-hidden rounded-xl ring-1 ring-[var(--ring)]/40">
           <iframe
