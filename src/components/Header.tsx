@@ -47,7 +47,7 @@ export default function Header() {
             width={200}
             height={60}
             priority
-            className="h-16 w-auto"
+            className="h-18 w-auto"
           />
         </Link>
 
@@ -81,10 +81,12 @@ export default function Header() {
               className={`absolute right-0 mt-2 w-56 rounded-xl border border-[color:rgb(0_0_0_/_0.08)] bg-white shadow-lg transition
                 ${openDesktopMenu ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-1 pointer-events-none"}`}
             >
-              <MenuLink href="/listings/all">All Listings</MenuLink>
-              <MenuLink href="/listings/jummah">Jummah</MenuLink>
-              <MenuLink href="/listings/taraweeh">Taraweeh</MenuLink>
-              <MenuLink href="/listings/teaching">Teaching</MenuLink>
+              <div className="p-1.5">
+                <MenuLink href="/listings/all">All Listings</MenuLink>
+                <MenuLink href="/listings/jummah">Jummah</MenuLink>
+                <MenuLink href="/listings/taraweeh">Taraweeh</MenuLink>
+                <MenuLink href="/listings/teaching">Teaching</MenuLink>
+              </div>
             </div>
           </div>
 
