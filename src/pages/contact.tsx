@@ -6,17 +6,18 @@ export default function ContactPage() {
       <h1 className="text-3xl font-bold mb-6 text-[var(--brand)]">Contact Us</h1>
 
       <p className="mb-6 text-[var(--ink)]/90">
-        If you would like to get in touch, please email us or call us at the numbers below.
+        If you would like to get in touch, please email us or send a WhatsApp message to the numbers below.
       </p>
 
-      <a
+     <a
         href={`mailto:${email}`}
-        className="inline-block mb-3 px-4 py-2 rounded-md bg-[var(--brand)] text-white text-sm font-medium hover:bg-[var(--brand-dark)] transition-colors"
+        className="inline-block mb-4 px-6 py-4 rounded-xl bg-[var(--brand)] text-white text-md font-sm hover:bg-[var(--brand-700)] transition-colors font-semibold"
       >
-        Email Us
+       Email Us
       </a>
 
-      <p className="mb-8 text-[var(--ink)]/90">
+        
+      <p className="mt-4 mb-8 text-[var(--ink)]/90">
         Or email us directly at{" "}
         <a
           href={`mailto:${email}`}

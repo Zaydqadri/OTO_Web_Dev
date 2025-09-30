@@ -83,7 +83,7 @@ export default function ListingsTable({ category }: { category?: string }) {
         </div>
         <Link
           href="/apply"
-          className="ml-3 px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-dark)] transition-colors"
+          className="ml-3 px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
         >
           Submit a Listing
         </Link>
