@@ -18,7 +18,7 @@ export default function ContactPage() {
 
         
       <p className="mt-4 mb-8 text-[var(--ink)]/90">
-        Or email us directly at{" "}
+        Reach us by email here:{" "}
         <a
           href={`mailto:${email}`}
           className="underline text-[var(--brand)]"
@@ -28,7 +28,7 @@ export default function ContactPage() {
       </p>
 
       <p className="text-[var(--ink)]/90">
-        Or call us at{" "}
+        Reach us through a WhatsApp message or phone call here:{" "}
         <a href="tel:16475816081" className="underline text-[var(--brand)]">
           647&nbsp;581&nbsp;6081
         </a>{" "}
