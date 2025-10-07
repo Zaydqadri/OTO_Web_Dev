@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      {/* <div className="mt-8 grid gap-4 md:grid-cols-3">
         {[
           ["Taraweeh Listings", "Should we put these here?"],
           ["Jummah Listings", "Should we put these here?"],
@@ -37,7 +37,7 @@
             <div className="text-[var(--muted)]">{d}</div>
           </div>
         ))}
-      </div>
+      </div> */}
     </section>
   );
 }

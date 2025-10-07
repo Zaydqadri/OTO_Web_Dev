@@ -53,7 +53,6 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1 relative">
-          <Link className={link} href="/about">About</Link>
           <Link className={link} href="/apply">Apply</Link>
 
           {/* Listings dropdown (desktop) */}

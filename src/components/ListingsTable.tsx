@@ -68,7 +68,7 @@ export default function ListingsTable({ category }: { category?: string }) {
         />
 
         {/* optional sorter */}
-        <div className="ml-auto flex items-center gap-2 text-sm">
+        {/* <div className="ml-auto flex items-center gap-2 text-sm">
           <span className="text-[var(--muted)]">Sort by</span>
           <select
             className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-2 py-1"
@@ -80,13 +80,14 @@ export default function ListingsTable({ category }: { category?: string }) {
             <option value="title">Title</option>
           </select>
 
-        </div>
+        </div> */}
         <Link
           href="/apply"
-          className="ml-3 px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
+          className="ml-auto px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
         >
           Submit a Listing
         </Link>
+
       </div>
 
       {/* Accordion list */}

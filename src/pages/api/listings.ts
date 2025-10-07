@@ -10,19 +10,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const data: Listing[] = [
     {
-      title: "", //required
-      description: "", //required
-      address: "", //required
-      category: "", // Taraweeh, Jummah, Teaching
-      city: "", //required
-      notes: "",
-      attendance: "",
-      accommodations: "", //Lodging, Meals, Travel
-      startDate: "",
-      endDate:"",
-      contactNumber: "",
-      contactEmail: "", 
-      available: "Filled", // required by admin
+      title: "Test", //required
+      description: "Test", //required
+      address: "Test", //required
+      category: "Test", // Taraweeh, Jummah, Teaching
+      city: "Test", //required
+      notes: "Test",
+      attendance: "Test",
+      accommodations: "Test", //Lodging, Meals, Travel
+      startDate: "Test",
+      endDate:"Test",
+      contactNumber: "Test",
+      contactEmail: "Test", 
+      available: "Filled", // Open, Filled required by admin
       approved: false // required by admin, if false, it will hide it on website
     },
     {
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       category: "Taraweeh",
       city: "Toronto",
       notes: "",
-      accommodations: "Housing, Meals,",
+      accommodations: "Housing, Meals",
       startDate: "2025-03-01",
       contactNumber: "Admin",
       contactEmail: "admin@example.com",
