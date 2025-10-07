@@ -1,5 +1,5 @@
 ﻿export default function ApplyPage() {
-  const link = "https://forms.gle/zZeWXFbnyBoPL35d7";
+  const link = "https://forms.gle/gzE8g8P56tbPpUcGA";
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12">
