@@ -1,9 +1,9 @@
-﻿// src/pages/_app.tsx
-import type { AppProps } from "next/app";
+﻿import type { AppProps } from "next/app";
+import "@/styles/globals.css";
 import { useRouter } from "next/router";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import "@/styles/globals.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
@@ -11,8 +11,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <div className="min-h-dvh flex flex-col">
-      {!hideChrome && <Header />}
-      <main className="flex-1 mx-auto w-full">
+            {!hideChrome && <Header />}
+
+      <main className="flex-1 mx-auto w-full max-w-6xl p-4">
         <Component {...pageProps} />
       </main>
       {!hideChrome && <Footer />}
