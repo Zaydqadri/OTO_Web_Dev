@@ -14,7 +14,7 @@
 
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href="/listings"
+          <a href="/listings/all"
              className="inline-flex items-center rounded-xl border border-[var(--brand)] bg-[var(--brand)] hover:bg-[var(--brand-700)] px-4 py-2 text-white font-semibold">
 
             Browse listings
