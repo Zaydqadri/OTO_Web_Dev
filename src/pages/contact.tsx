@@ -4,11 +4,11 @@ export default function ContactPage() {
   return (
     <section className="mx-auto max-w-3xl px-4 py-12">
       <h1 className="text-3xl font-bold mb-6 text-[var(--brand)]">Contact Us</h1>
-
-      <p className="mb-4 text-[var(--ink)]/90">
+    <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
+      <p className="mb-4 text-[var(--brand)]/90">
         If you would like to get in touch, please email us or send a WhatsApp message to the numbers below.
       </p>
-
+ 
      <a
         href={`mailto:${email}`}
         className="inline-block mb-3   mt-3 px-6 py-4 rounded-xl bg-[var(--brand)] text-white text-md font-sm hover:bg-[var(--brand-700)] transition-colors font-semibold"
@@ -41,6 +41,7 @@ export default function ContactPage() {
       <p className="mt-5 text-[var(--ink)]/90">
         Also, feel free to reach out to suggest any changes/improvements.
       </p>
+    </div>
     </section>
   );
 }

@@ -1,11 +1,11 @@
 ﻿export default function Home() {
   return (
-    <section className="mx-auto max-w-6xl py-16 px-4">
-      <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white p-10">
-        <h1 className="text-3xl md:text-4xl font-bold text-[var(--brand)]">
-          Our Mission
-        </h1>
-        <p className="mt-3 text-[var(--muted)] max-w-2xl">
+    <section className="mx-auto max-w-4xl px-4 py-12">
+      <h1 className="text-3xl font-bold text-[var(--brand)] mb-4">
+        Our Mission
+      </h1>
+      <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
+        <p className="text-[var(--brand)]/90">
           With the growing number of Huffaz in North America and beyond, many face challenges in finding a place to lead Salatut Taraweeh. 
           Similarly, many Masajid and Musallahs often struggle to find Huffaz, especially as Ramadan approaches.<br /><br />
           The goal of Ontario Taraweeh Outreach is to create a comprehensive database that connects Huffaz with Islamic organizations, facilitating these connections in a timely manner. 
