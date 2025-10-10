@@ -2,7 +2,7 @@ export default function ContactPage() {
   const email = "ontariotaraweehoutreach@gmail.com";
 
   return (
-    <section className="mx-auto max-w-3xl px-4 py-12">
+    <section className="mx-auto max-w-4xl px-4 py-12">
       <h1 className="text-3xl font-bold mb-6 text-[var(--brand)]">Contact Us</h1>
     <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
       <p className="mb-4 text-[var(--brand)]/90">
