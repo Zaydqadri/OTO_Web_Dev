@@ -3,7 +3,7 @@
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-3xl font-bold text-[var(--brand)] mb-4">Apply</h1>
+      <h1 className="text-3xl font-bold text-[var(--brand)] mb-6">Apply</h1>
 
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
         <p className="text-[var(--brand)]/90">
@@ -11,7 +11,7 @@
           <br></br>
         </p>
       
-        <ul className="list-disc list-inside text-black/80 mb-4">
+        <ul className="list-disc list-outside text-black/80 pl-4">
         <br></br>
           <li>Huffaz to be considered for Taraweeh leadership roles during Ramadan</li>
           <li>Imams to be matched with part-time or full-time positions at Islamic centers</li>
