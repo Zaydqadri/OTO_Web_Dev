@@ -42,6 +42,6 @@
         "contactNumber": "",
         "contactEmail": "",
         "available": "Open",
-        "approved": true
+        "approved": false
     }
 ]
