@@ -30,7 +30,7 @@
         "approved": true
     },
     {
-        "title": "Islamic - Centre of Cambridge",
+        "title": "Islamic Centre of Cambridge",
         "description": "Huffaz needed for General Taraweeh",
         "address": "1550 Dunbar Rd, Cambridge, ON N1R 8J5",
         "category": "Taraweeh",
@@ -42,6 +42,6 @@
         "contactNumber": "",
         "contactEmail": "",
         "available": "Open",
-        "approved": true
+        "approved": false
     }
 ]
