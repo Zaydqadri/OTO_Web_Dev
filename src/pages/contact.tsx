@@ -49,7 +49,7 @@ export default function ContactPage() {
         ].map(([t, d]) => {
           const isEmail = t === "Email";
           return (
-            <div key={t} className="rounded-xl border border-[color:rgb(0_0_0_/_0.06)] bg-white p-5">
+            <div key={t} className="rounded-xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5">
               <div className="text-sm font-semibold text-[var(--brand)]">{t}</div>
               <div className="text-[var(--muted)]">
                 {isEmail ? (

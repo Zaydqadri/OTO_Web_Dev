@@ -26,9 +26,9 @@
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         {[
-          ["Taraweeh Listings", "Learn More", "/taraweeh"],
-          ["Imam Positions", "Part-time & Full-time", "/imam"],
-          ["Teaching Listings", "Learn More", "/teaching"],
+          ["Taraweeh Listings", "Learn More", "/listings/taraweeh"],
+          ["Imam Positions", "Part-time & Full-time", "/listings/jummah"],
+          ["Teaching Listings", "Learn More", "/listings/teaching"],
         ].map(([title, desc, link]) => (
           <a
             key={title}
