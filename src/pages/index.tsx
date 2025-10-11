@@ -6,12 +6,12 @@
       </h1>
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
         <p className="text-[var(--brand)]/90">
-          Welcome to Ontario Taraweeh Outreach — a dedicated platform designed to connect Huffaz and Islamic scholars with Masajid, Musallahs, and Madaris across Ontario and North America.<br /><br />
+          Welcome to Ontario Taraweeh Outreach — a dedicated platform designed to connect Huffaz and Ulamaa with Masajid, Musallahs, and Madaris across Ontario and North America.<br /><br />
           Every year, as Ramadan approaches, hundreds of Huffaz look for opportunities to lead Salatut Taraweeh — while many Masajid and Islamic centers scramble to find reliable, qualified individuals to fill this vital role.<br /><br />
           
-          But the need doesn not stop at Ramadan.<br /><br />
+          But the need does not stop at Ramadan.<br /><br />
 
-          Across the region, there is a constant demand for Ulama, Imams, and Quraan teachers to serve our communities year-round — teaching in madaaris, delivering khutbahs, and offering spiritual guidance.
+          Across the region, there is a constant demand for Ulamaa, Imams, and Quraan teachers to serve our communities year-round — teaching in madaaris, delivering khutbahs, and offering spiritual guidance.
           Ontario Taraweeh Outreach was created to bridge this gap to make it easier, faster, and more transparent for qualified individuals and institutions to find each other.
         </p>
 
