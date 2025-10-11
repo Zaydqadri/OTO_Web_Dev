@@ -11,7 +11,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>Ontario Taraweeh Outreach</title>
         <meta name="description" content="Connecting Huffaz and Masajid across Ontario." />
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.png" />
         <meta name="theme-color" content="#021733" />
       </Head>
 
