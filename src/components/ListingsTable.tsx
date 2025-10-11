@@ -16,20 +16,22 @@ export default function ListingsTable({ category }: { category?: string }) {
   const [sort, _setSort] = useState<Sort>({ key: "city", dir: "asc" });
 
   useEffect(() => {
-  let alive = true;
-  (async () => {
-    try {
-      const r = await fetch(`/listings.json`);
-      if (!r.ok) throw new Error(`GET /listings.json -> ${r.status}`);
-      const data = await r.json();
-      if (alive) setRows(Array.isArray(data) ? data.filter(x => x.approved ?? true) : []);
-    } catch (err) {
-      console.error("Failed to load listings.json:", err);
-      if (alive) setRows([]);
-    }
-  })();
-  return () => { alive = false; };
-}, []);
+    let alive = true;
+    (async () => {
+      try {
+        const url = `/listings.json?v=${Date.now()}`; // cache-bust
+        const r = await fetch(url, { cache: "no-store" });
+        if (!r.ok) throw new Error(`GET ${url} -> ${r.status}`);
+        const data = await r.json();
+        if (alive) setRows(Array.isArray(data) ? data.filter(x => x.approved ?? true) : []);
+      } catch (err) {
+        console.error("Failed to load listings.json:", err);
+        if (alive) setRows([]);
+      }
+    })();
+    return () => { alive = false; };
+  }, []);
+
 
 
 

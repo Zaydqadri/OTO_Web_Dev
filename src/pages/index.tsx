@@ -5,10 +5,11 @@ export default function Home() {
   return (
     <section className="mx-auto max-w-4xl px-4 pt-2 pb-12">
       <div className="flex justify-center my-8">
-     <Image
+        <img
           src="/Bismillah.png"
           alt="Bismillah calligraphy"
           className="w-60 sm:w40 md:w-[20rem] lg:w-[20rem] xl:w-[20rem] h-auto drop-shadow-md"
+          
         />
       </div>
 
@@ -20,8 +21,8 @@ export default function Home() {
         <p className="text-[var(--brand)]/90">
           Welcome to Ontario Taraweeh Outreach, a dedicated platform designed to connect Huffaz and Ulamaa with Masajid, Musallahs, and Madaris across Ontario and North America.<br /><br />
           Every year, as Ramadan approaches, hundreds of Huffaz look for opportunities to lead Salatut Taraweeh, while many Masajid and Islamic centers scramble to find reliable, qualified individuals to fill this vital role.<br /><br />
-          
-          But the need does not stop at Ramadan.<br/><br/>
+
+          But the need does not stop at Ramadan.<br /><br />
 
           Across the region, there is a constant demand for Ulamaa, Imams, and Quraan teachers to serve our communities year-round, whether it be teaching in Madaris, delivering khutbahs, or offering spiritual guidance.
           Ontario Taraweeh Outreach was created to bridge this gap to make it easier, faster, and more transparent for qualified individuals and institutions to find each other.
@@ -30,7 +31,7 @@ export default function Home() {
 
         <div className="mt-6 flex flex-wrap gap-3">
           <Link href="/apply"
-             className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-[var(--brand)] px-4 py-2 text-white hover:bg-[var(--brand-700)] font-semibold">
+            className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-[var(--brand)] px-4 py-2 text-white hover:bg-[var(--brand-700)] font-semibold">
             Submit a listing
           </Link>
         </div>
