@@ -37,7 +37,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="border-b border-[color:rgb(0_0_0_/_0.06)] bg-white/90 backdrop-blur sticky top-0 z-50">
+    <header className="border-b border-[color:rgb(0_0_0_/_0.06)] bg-white sticky top-0 z-50">
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
@@ -96,7 +96,13 @@ export default function Header() {
         <button
           aria-label="Open menu"
           aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen(o => !o)}
+          onClick={() => {
+            setMobileOpen(o => {
+              const newState = !o;
+              if (!newState) setMobileListingsOpen(false);
+              return newState;
+            });
+          }}
           className="md:hidden p-2 rounded-lg hover:bg-[var(--brand-50)]"
         >
           <Hamburger open={mobileOpen} />
@@ -109,7 +115,6 @@ export default function Header() {
           ${mobileOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"}`}
       >
         <div className="mx-auto max-w-6xl px-4 py-3 space-y-1 bg-white">
-          <MobileLink href="/about" onClick={() => setMobileOpen(false)}>About</MobileLink>
           <MobileLink href="/apply" onClick={() => setMobileOpen(false)}>Apply</MobileLink>
 
           {/* Mobile Listings */}
