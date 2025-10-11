@@ -1,6 +1,14 @@
 ﻿export default function Home() {
   return (
     <section className="mx-auto max-w-4xl px-4 py-12">
+      <div className="flex justify-center my-8">
+     <img
+          src="/public/Bismillah.png"
+          alt="Bismillah calligraphy"
+          className="w-64 sm:w-80 md:w-[28rem] lg:w-[36rem] xl:w-[40rem] h-auto drop-shadow-md"
+        />
+      </div>
+
       <h1 className="text-3xl font-bold text-[var(--brand)] mb-4">
         Our Mission
       </h1>
