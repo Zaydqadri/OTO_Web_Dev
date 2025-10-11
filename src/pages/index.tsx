@@ -18,7 +18,7 @@
 
         <div className="mt-6 flex flex-wrap gap-3">
           <a href="/apply"
-             className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-white px-4 py-2 text-[var(--ink)] hover:bg-[var(--brand-50)] font-semibold">
+             className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-[var(--brand)] px-4 py-2 text-white hover:bg-[var(--brand-700)] font-semibold">
             Submit a listing
           </a>
         </div>
@@ -26,16 +26,16 @@
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         {[
-          ["Taraweeh Listings", "Learn More", "/listings/taraweeh"], 
-          ["Imam Positions", "Part-time & Full-time", "/lisings/jummah"],
-          ["Teaching Listings", "Learn?", "/listings/teaching"],
+          ["Taraweeh Listings", "Learn More", "/taraweeh"],
+          ["Imam Positions", "Part-time & Full-time", "/imam"],
+          ["Teaching Listings", "Learn More", "/teaching"],
         ].map(([title, desc, link]) => (
           <a
             key={title}
             href={link}
-            className="inline-flex flex-col justify-between rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-[var(--brand)] px-4 py-3 text-white hover:bg-[var(--brand-700)] font-semibold text-center transition"
+            className="inline-flex flex-col justify-between rounded-xl border border-[color:rgb(0_0_0_/_0.15)] bg-white px-4 py-3 text-[var(--ink)] hover:bg-[var(--brand-50)] font-semibold text-center transition"
           >
-            <span className="text-white text-lg">{title}</span>
+            <span className="text-[var(--brand)] text-lg">{title}</span>
             <span className="text-sm text-[var(--muted)] font-normal">
               {desc}
             </span>
