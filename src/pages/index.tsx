@@ -12,7 +12,6 @@
       <h1 className="text-3xl font-bold text-[var(--brand)] mb-4">
         Our Mission
       </h1>
-      <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
         <p className="text-[var(--brand)]/90">
           Welcome to Ontario Taraweeh Outreach — a dedicated platform designed to connect Huffaz and Ulamaa with Masajid, Musallahs, and Madaris across Ontario and North America.<br /><br />
           Every year, as Ramadan approaches, hundreds of Huffaz look for opportunities to lead Salatut Taraweeh — while many Masajid and Islamic centers scramble to find reliable, qualified individuals to fill this vital role.<br /><br />
@@ -30,7 +29,7 @@
             Submit a listing
           </a>
         </div>
-      </div>
+      
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         {[
