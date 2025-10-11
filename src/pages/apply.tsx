@@ -10,12 +10,14 @@
           Our secure database is a centralized system that allows:
           <br></br>
         </p>
+        <p>
         <ol>
           <li>Huffaz to be considered for Taraweeh leadership roles during Ramadan</li>
           <li>Imams to be matched with part-time or full-time positions at Islamic centers</li>
           <li>Quraan teachers to find opportunities in weekend schools, full-time, or part-time programs</li>
           <li>Organizations to announce their listings, as well as browse and connect with qualified candidates quickly and efficiently</li>
         </ol>
+        </p>
         <br></br>
         <p>  
           Please continue to spread the word. If you know of any Huffaz or Masajid who would benefit from this initiative,
