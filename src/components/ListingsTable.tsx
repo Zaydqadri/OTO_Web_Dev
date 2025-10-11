@@ -12,9 +12,8 @@ const chip = "inline-flex items-center rounded-full border px-2 py-0.5 text-xs";
 export default function ListingsTable({ category }: { category?: string }) {
   const [rows, setRows] = useState<Listing[]>([]);
   const [q, setQ] = useState("");
-  const [area, _setArea] = useState("All");
   const [acc, _setAcc] = useState("All");
-  const [sort, setSort] = useState<Sort>({ key: "city", dir: "asc" });
+  const [sort, _setSort] = useState<Sort>({ key: "city", dir: "asc" });
 
   useEffect(() => {
   let alive = true;
