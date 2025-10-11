@@ -24,18 +24,24 @@
         </div>
       </div>
 
-      {<div className="mt-8 grid gap-4 md:grid-cols-3">
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
         {[
-          ["Taraweeh Listings", "Learn More"],
-          ["Imam Positions", "Part-time & Full-time"],
-          ["Teaching Listings", "Learn?"],
-        ].map(([t, d]) => (
-          <div key={t} className="rounded-xl border border-[color:rgb(0_0_0_/_0.06)] bg-white p-5">
-            <div className="text-sm font-semibold text-[var(--brand)]">{t}</div>
-            <div className="text-[var(--muted)]">{d}</div>
-          </div>
+          ["Taraweeh Listings", "Learn More", "/listings/taraweeh"], 
+          ["Imam Positions", "Part-time & Full-time", "/lisings/jummah"],
+          ["Teaching Listings", "Learn?", "/listings/teaching"],
+        ].map(([title, desc, link]) => (
+          <a
+            key={title}
+            href={link}
+            className="inline-flex flex-col justify-between rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-[var(--brand)] px-4 py-3 text-white hover:bg-[var(--brand-700)] font-semibold text-center transition"
+          >
+            <span className="text-white text-lg">{title}</span>
+            <span className="text-sm text-[var(--muted)] font-normal">
+              {desc}
+            </span>
+          </a>
         ))}
-      </div> }
+      </div>
     </section>
   );
 }
