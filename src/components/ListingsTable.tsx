@@ -12,11 +12,27 @@ const chip = "inline-flex items-center rounded-full border px-2 py-0.5 text-xs";
 export default function ListingsTable({ category }: { category?: string }) {
   const [rows, setRows] = useState<Listing[]>([]);
   const [q, setQ] = useState("");
-  const [area, setArea] = useState("All");
-  const [acc, setAcc] = useState("All");
+  const [area, _setArea] = useState("All");
+  const [acc, _setAcc] = useState("All");
   const [sort, setSort] = useState<Sort>({ key: "city", dir: "asc" });
 
-  useEffect(() => { fetch("/api/listings").then(r => r.json()).then(setRows); }, []);
+  useEffect(() => {
+  let alive = true;
+  (async () => {
+    try {
+      const r = await fetch(`/listings.json`);
+      if (!r.ok) throw new Error(`GET /listings.json -> ${r.status}`);
+      const data = await r.json();
+      if (alive) setRows(Array.isArray(data) ? data.filter(x => x.approved ?? true) : []);
+    } catch (err) {
+      console.error("Failed to load listings.json:", err);
+      if (alive) setRows([]);
+    }
+  })();
+  return () => { alive = false; };
+}, []);
+
+
 
   // options
   const baseRows = useMemo(
@@ -50,11 +66,11 @@ export default function ListingsTable({ category }: { category?: string }) {
         const B = (b[sort.key] ?? "").toString().toLowerCase();
         return sort.dir === "asc" ? A.localeCompare(B) : B.localeCompare(A);
       });
-  }, [baseRows, q, area, acc, sort]);
+  }, [baseRows, q, acc, sort]);
 
 
-  const toggleSort = (key: SortKey) =>
-    setSort(s => (s.key === key ? { key, dir: s.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" }));
+  // const toggleSort = (key: SortKey) =>
+  //   setSort(s => (s.key === key ? { key, dir: s.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" }));
 
   return (
     <section className="mx-auto max-w-6xl">
@@ -168,9 +184,9 @@ export default function ListingsTable({ category }: { category?: string }) {
                           )}
                         </>
                       ) : (
-                        <a href="/contact" className="underline text-[var(--brand)]">
+                        <Link href="/contact" className="underline text-[var(--brand)]">
                           Contact Us For More Details
-                        </a>
+                        </Link>
                       )
                     }
                   />

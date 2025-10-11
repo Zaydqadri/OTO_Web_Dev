@@ -1,8 +1,11 @@
-﻿export default function Home() {
+﻿import Image from "next/image";
+import Link from "next/link";
+
+export default function Home() {
   return (
     <section className="mx-auto max-w-4xl px-4 pt-2 pb-12">
       <div className="flex justify-center my-8">
-     <img
+     <Image
           src="/Bismillah.png"
           alt="Bismillah calligraphy"
           className="w-60 sm:w40 md:w-[20rem] lg:w-[20rem] xl:w-[20rem] h-auto drop-shadow-md"
@@ -26,10 +29,10 @@
 
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href="/apply"
+          <Link href="/apply"
              className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-[var(--brand)] px-4 py-2 text-white hover:bg-[var(--brand-700)] font-semibold">
             Submit a listing
-          </a>
+          </Link>
         </div>
       </div>
 
