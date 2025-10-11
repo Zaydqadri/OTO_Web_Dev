@@ -11,17 +11,12 @@
           
           But the need doesn not stop at Ramadan.<br /><br />
 
-          Across the region, there is a constant demand for knowledgeable Ulama, Imams, and Quraan teachers to serve our communities year-round — teaching in madaaris, delivering khutbahs, and offering spiritual guidance.
+          Across the region, there is a constant demand for Ulama, Imams, and Quraan teachers to serve our communities year-round — teaching in madaaris, delivering khutbahs, and offering spiritual guidance.
           Ontario Taraweeh Outreach was created to bridge this gap to make it easier, faster, and more transparent for qualified individuals and institutions to find each other.
         </p>
 
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a href="/listings/all"
-             className="inline-flex items-center rounded-xl border border-[var(--brand)] bg-[var(--brand)] hover:bg-[var(--brand-700)] px-4 py-2 text-white font-semibold">
-
-            Browse listings
-          </a>
           <a href="/apply"
              className="inline-flex items-center rounded-xl border border-[color:rgb(0_0_0_/_0.10)] bg-white px-4 py-2 text-[var(--ink)] hover:bg-[var(--brand-50)] font-semibold">
             Submit a listing
@@ -31,9 +26,9 @@
 
       {<div className="mt-8 grid gap-4 md:grid-cols-3">
         {[
-          ["Taraweeh Listings", "Should we put these here?"],
-          ["Jummah Listings", "Should we put these here?"],
-          ["Teaching Listings", "Should we put these here?"],
+          ["Taraweeh Listings", "Learn More"],
+          ["Imam Positions", "Part-time & Full-time"],
+          ["Teaching Listings", "Learn?"],
         ].map(([t, d]) => (
           <div key={t} className="rounded-xl border border-[color:rgb(0_0_0_/_0.06)] bg-white p-5">
             <div className="text-sm font-semibold text-[var(--brand)]">{t}</div>
