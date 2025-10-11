@@ -11,7 +11,7 @@
           <br></br>
         </p>
       
-        <ul className="list-decimal list-inside text-black/80 mb-4">
+        <ul className="list-disc list-inside text-black/80 mb-4">
           <li>Huffaz to be considered for Taraweeh leadership roles during Ramadan</li>
           <li>Imams to be matched with part-time or full-time positions at Islamic centers</li>
           <li>Quraan teachers to find opportunities in weekend schools, full-time, or part-time programs</li>
