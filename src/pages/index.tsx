@@ -1,15 +1,15 @@
 ﻿export default function Home() {
   return (
-    <section className="mx-auto max-w-4xl px-4 py-12">
+    <section className="mx-auto max-w-4xl px-4 pt-2 pb-12">
       <div className="flex justify-center my-8">
      <img
-          src="/public/Bismillah.png"
+          src="/Bismillah.png"
           alt="Bismillah calligraphy"
-          className="w-64 sm:w-80 md:w-[28rem] lg:w-[36rem] xl:w-[40rem] h-auto drop-shadow-md"
+          className="w-60 sm:w40 md:w-[20rem] lg:w-[20rem] xl:w-[20rem] h-auto drop-shadow-md"
         />
       </div>
 
-      <h1 className="text-3xl font-bold text-[var(--brand)] mb-4">
+      <h1 className="text-3xl font-bold text-[var(--brand)] py-4">
         Our Mission
       </h1>
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
