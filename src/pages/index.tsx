@@ -14,7 +14,7 @@ export default function Home() {
       </div>
 
       <h1 className="text-3xl font-bold text-[var(--brand)] py-4">
-        Our Mission
+        Our Purpose
       </h1>
 
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
