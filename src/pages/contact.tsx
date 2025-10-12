@@ -15,7 +15,8 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
+      {/* ✅ Centered Contact Cards */}
+      <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-center">
         {[
           ["Email", "ontariotaraweehoutreach@gmail.com", "/email.svg"],
           ["Phone/WhatsApp", "(647) 581-6081 or (647) 410-7176", "/phone.svg"],
@@ -24,7 +25,7 @@ export default function ContactPage() {
           return (
             <div
               key={t}
-              className="rounded-xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 flex flex-col gap-2"
+              className="w-full max-w-sm rounded-xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 flex flex-col gap-2"
             >
               <div className="flex items-center gap-2 text-sm font-semibold text-[var(--brand)]">
                 <img src={icon} alt={`${t} icon`} className="w-5 h-5" />
@@ -53,13 +54,13 @@ export default function ContactPage() {
         })}
       </div>
 
-      {/* Join WhatsApp Group Button */}
-      <div className="mt-8 text-center">
+      {/* ✅ WhatsApp Button with Blue Border */}
+      <div className="mt-8 flex justify-center">
         <a
           href="https://chat.whatsapp.com/CRaq2olTvFs5Ipo1WaMuDA?mode=wwc"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-4 rounded-xl bg-white border border-[color:rgb(0_0_0_/_0.25)] text-[var(--brand)] text-md font-semibold bg-[var(--brand)] hover:bg-[var(--brand-50)]"
+          className="w-full max-w-sm inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-white border border-[var(--brand)] text-[var(--brand)] text-md font-semibold hover:bg-[var(--brand)]/10 transition-colors"
         >
           <img
             src="/whatsapp.svg"
