@@ -7,24 +7,24 @@ export default function ContactPage() {
 
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
         <p className="mb-4 text-[var(--brand)]/90">
-          If you would like to get in touch, please email us or send a WhatsApp message to the numbers below.
+          If you would like to get in touch, please contact us with the details listed below.
         </p>
 
-        <a
+        {/* <a
           href={`mailto:${email}`}
           className="inline-block mb-3 mt-3 px-6 py-4 rounded-xl bg-[var(--brand)] text-white text-md font-sm hover:bg-[var(--brand-700)] transition-colors font-semibold"
         >
           Email Us
-        </a>
+        </a> */}
 
-        <p className="mt-4 mb-5 text-[var(--ink)]/90">
+        {/* <p className="mt-4 mb-5 text-[var(--ink)]/90">
           Reach us by email here:{" "}
           <a href={`mailto:${email}`} className="underline text-[var(--brand)]">
             {email}
           </a>
-        </p>
+        </p> */}
 
-        <p className="text-[var(--ink)]/90">
+        {/* <p className="text-[var(--ink)]/90">
           Reach us through a WhatsApp message or phone call here:{" "}
           <a href="tel:16475816081" className="underline text-[var(--brand)]">
             647&nbsp;581&nbsp;6081
@@ -33,10 +33,10 @@ export default function ContactPage() {
           <a href="tel:16474107176" className="underline text-[var(--brand)]">
             647&nbsp;410&nbsp;7176
           </a>.
-        </p>
+        </p> */}
 
         <p className="mt-5 text-[var(--ink)]/90">
-          Also, feel free to reach out to suggest any changes/improvements.
+          Feel free to reach out to suggest any changes/improvements.
         </p>
 
         {/* ✅ Added missing closing div here */}
@@ -45,7 +45,7 @@ export default function ContactPage() {
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         {[
           ["Email", "ontariotaraweehoutreach@gmail.com"],
-          ["Phone", "(647) 581-6081 or (647) 410-7176"],
+          ["Phone/WhatsApp", "(647) 581-6081 or (647) 410-7176"],
         ].map(([t, d]) => {
           const isEmail = t === "Email";
           return (
