@@ -210,8 +210,8 @@ export default function ListingsTable({ category }: { category?: string }) {
           <div className="p-6 text-[var(--ink)] rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
             <p className="font-medium">No listings found right now.</p>
             <p className="mt-1 text-[var(--muted)]">
-              Please check back soon to stay up to date. If you’d like to add an opportunity, you can{" "}
-              <Link href="/apply" className="underline text-[var(--brand)]">submit a listing</Link>.
+              Please check back soon to stay up to date. If you’d like to add a listing, please visit{" "}
+              <Link href="/apply" className="underline text-[var(--brand)]">this page</Link>.
             </p>
           </div>
 
