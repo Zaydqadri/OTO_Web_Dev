@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       approved: false // required by admin, if false, it will hide it on website
     },
     {
-      title: "Hafiz Needed",
+      title: "Hafidh Needed",
       description: "Looking for a reliable ḥāfiẓ to lead Tarāwīḥ for Ramadan. Accommodation and meals provided.",
       address: "Masjid",
       category: "Taraweeh",
