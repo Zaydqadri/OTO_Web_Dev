@@ -114,7 +114,7 @@ export default function ListingsTable({ category }: { category?: string }) {
       <div className="space-y-3">
         {filtered.map((r, i) => (
           <details key={i} className="group rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
-           <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 [&::-webkit-details-marker]:hidden">
+            <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 [&::-webkit-details-marker]:hidden">
               {/* Top row: arrow + title */}
               <div className="flex items-center gap-2">
                 {/* Expand icon */}
@@ -151,7 +151,7 @@ export default function ListingsTable({ category }: { category?: string }) {
                     className={`${chip} ${r.available === "Open"
                       ? "border-green-500 text-green-700 bg-green-50"
                       : "border-red-500 text-red-700 bg-red-50"
-                    }`}
+                      }`}
                   >
                     {r.available === "Open" ? "Open" : "Filled"}
                   </span>
@@ -207,9 +207,14 @@ export default function ListingsTable({ category }: { category?: string }) {
         ))}
 
         {filtered.length === 0 && (
-          <div className="p-6 text-[var(--muted)] rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
-            No listings found.
+          <div className="p-6 text-[var(--ink)] rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
+            <p className="font-medium">No listings found right now.</p>
+            <p className="mt-1 text-[var(--muted)]">
+              Please check back soon to stay up to date. If you’d like to add an opportunity, you can{" "}
+              <Link href="/apply" className="underline text-[var(--brand)]">submit a listing</Link>.
+            </p>
           </div>
+
         )}
       </div>
     </section>
