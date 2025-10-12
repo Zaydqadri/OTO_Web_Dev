@@ -17,7 +17,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <title>Ontario Taraweeh Outreach</title>
         <meta
           name="description"
-          content="Connecting Huffaz and Masajid across Ontario."
+          content="Connecting Huffaz and Masajid across Ontario and beyond."
         />
         <link rel="icon" href="/OTOFaviconNew.png" />
         <meta name="theme-color" content="#021733" />

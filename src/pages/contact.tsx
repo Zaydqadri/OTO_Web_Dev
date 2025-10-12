@@ -7,7 +7,11 @@ export default function ContactPage() {
 
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
         <p className="mb-4 text-[var(--brand)]/90">
+          We are always looking to grow and connect with more communities across Ontario and beyond.
           If you would like to get in touch, please contact us with the details listed below.
+        </p>
+          <p className="mt-5 text-[var(--ink)]/90">
+          Please also feel free to reach out to suggest any changes or improvements.
         </p>
 
         {/* <a
@@ -35,9 +39,6 @@ export default function ContactPage() {
           </a>.
         </p> */}
 
-        <p className="mt-5 text-[var(--ink)]/90">
-          Feel free to reach out to suggest any changes/improvements.
-        </p>
 
         {/* ✅ Added missing closing div here */}
       </div>
