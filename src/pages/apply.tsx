@@ -26,6 +26,7 @@
         </p>
         <br />
         <p>Jazakallahu Khair.</p>
+         </div>
 
         {/* ✅ Two side-by-side buttons */}
 <div className="mt-6 flex flex-col items-center gap-4">
@@ -48,7 +49,7 @@
   </a>
 </div>
 
-      </div>
+     
 
       {/* <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-3 mb-3">
         <div className="aspect-[3/4] w-full overflow-hidden rounded-xl ring-1 ring-[var(--ring)]/40">
