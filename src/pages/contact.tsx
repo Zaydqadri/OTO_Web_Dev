@@ -52,6 +52,23 @@ export default function ContactPage() {
           );
         })}
       </div>
+
+      {/* Join WhatsApp Group Button */}
+      <div className="mt-8 text-center">
+        <a
+          href="https://chat.whatsapp.com/CRaq2olTvFs5Ipo1WaMuDA?mode=wwc"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-4 rounded-xl bg-white border border-[color:rgb(0_0_0_/_0.25)] text-[var(--brand)] text-md font-semibold bg-[var(--brand)] hover:bg-[var(--brand-50)]"
+        >
+          <img
+            src="/whatsapp.svg"
+            alt="WhatsApp icon"
+            className="w-5 h-5"
+          />
+          Join WhatsApp Group
+        </a>
+      </div>
     </section>
   );
 }
