@@ -4,6 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <section className="mx-auto max-w-4xl px-4 pt-2 pb-12">
+      
       <div className="flex justify-center my-8">
         <img
           src="/Bismillah.png"
