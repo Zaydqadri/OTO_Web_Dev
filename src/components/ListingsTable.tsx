@@ -211,7 +211,7 @@ export default function ListingsTable({ category }: { category?: string }) {
             <p className="font-medium">No listings found right now.</p>
             <p className="mt-1 text-[var(--muted)]">
               Please check back soon to stay up to date. If you’d like to add an opportunity, you can{" "}
-              <a href="/apply" className="underline text-[var(--brand)]">submit a listing</a>.
+              <Link href="/apply" className="underline text-[var(--brand)]">submit a listing</Link>.
             </p>
           </div>
 
