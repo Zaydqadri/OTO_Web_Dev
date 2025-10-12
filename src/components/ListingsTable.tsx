@@ -76,13 +76,14 @@ export default function ListingsTable({ category }: { category?: string }) {
   return (
     <section className="mx-auto max-w-6xl">
       {/* Controls */}
-      <div className="mb-4 flex flex-wrap gap-3 items-center">
+      <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-3">
         <input
-          className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 min-w-56 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+          className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 max-w-70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
           placeholder={`Search ${category ? category : "listings"}…`}
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
+
 
         {/* optional sorter */}
         {/* <div className="ml-auto flex items-center gap-2 text-sm">
@@ -98,59 +99,64 @@ export default function ListingsTable({ category }: { category?: string }) {
           </select>
 
         </div> */}
-        <Link
-          href="/apply"
-          className="ml-auto px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
-        >
-          Submit a Listing
-        </Link>
 
+        <div className="w-full py-2 flex sm:justify-end justify-start">
+          <Link
+            href="/apply"
+            className="px-4 py-2 rounded-lg bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
+          >
+            Submit a Listing
+          </Link>
+        </div>
       </div>
 
       {/* Accordion list */}
       <div className="space-y-3">
         {filtered.map((r, i) => (
           <details key={i} className="group rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
-            <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-wrap items-center gap-2 sm:gap-3">
-              {/* Title • City */}
-              <span className="font-semibold text-[var(--ink)]">
-                {r.title}{r.city ? ` • ${r.city}` : ""}
-              </span>
-
-              {/* Category pill */}
-              {r.category && (
-                <span className={`${chip} border-[var(--brand)]/30 text-[var(--brand)] bg-[var(--brand-50)]/60`}>
-                  {r.category}
+           <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 [&::-webkit-details-marker]:hidden">
+              {/* Top row: arrow + title */}
+              <div className="flex items-center gap-2">
+                {/* Expand icon */}
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[var(--muted)]/30 text-[var(--muted)] transition-transform duration-300 group-open:rotate-180">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </span>
-              )}
 
-              {/* Availability status */}
-              {r.available && (
-                <span
-                  className={`${chip} ${r.available === "Open"
-                    ? "border-green-500 text-green-700 bg-green-50"
-                    : "border-red-500 text-red-700 bg-red-50"
+                {/* Title • City */}
+                <span className="font-semibold text-[var(--ink)]">
+                  {r.title}{r.city ? ` • ${r.city}` : ""}
+                </span>
+              </div>
+
+              {/* Second line (mobile): chips */}
+              <div className="flex flex-wrap gap-2 mt-2 sm:mt-0 sm:ml-3">
+                {r.category && (
+                  <span className={`${chip} border-[var(--brand)]/30 text-[var(--brand)] bg-[var(--brand-50)]/60`}>
+                    {r.category}
+                  </span>
+                )}
+                {r.available && (
+                  <span
+                    className={`${chip} ${r.available === "Open"
+                      ? "border-green-500 text-green-700 bg-green-50"
+                      : "border-red-500 text-red-700 bg-red-50"
                     }`}
-                >
-                  {r.available === "Open" ? "Open" : "Filled"}
-                </span>
-              )}
-
-              {/* Nicer expand icon */}
-              <span className="ml-auto flex h-6 w-6 items-center justify-center rounded-full border border-[var(--muted)]/30 text-[var(--muted)] transition-transform duration-300 group-open:rotate-180">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-4 w-4"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
+                  >
+                    {r.available === "Open" ? "Open" : "Filled"}
+                  </span>
+                )}
+              </div>
             </summary>
 
 
