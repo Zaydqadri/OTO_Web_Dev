@@ -8,33 +8,45 @@
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-5 mb-6">
         <p className="text-[var(--brand)]/90">
           Our secure database is a centralized system that allows:
-          <br></br>
+          <br />
         </p>
-      
+
         <ul className="list-disc list-outside text-black/80 pl-4">
-        <br></br>
+          <br />
           <li>Huffadh to be considered for Taraweeh leadership roles during Ramadan</li>
           <li>Imams to be matched with part-time or full-time positions at Islamic centers</li>
           <li>Quraan teachers to find opportunities in weekend schools, full-time, or part-time programs</li>
           <li>Organizations to announce their listings, as well as browse and connect with qualified candidates quickly and efficiently</li>
         </ul>
-      
-        <br></br>
-        <p>  
+
+        <br />
+        <p>
           Please continue to spread the word. If you know of any Huffadh or Masajid who would benefit from this initiative,
-          please let them know to fill in our form and join the community. 
+          please let them know to fill in our form and join the community.
         </p>
-        <br></br>
+        <br />
         <p>Jazakallahu Khair.</p>
 
-        <a
-          href={link}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2 text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
-        >
-          Open Application Form
-        </a>
+        {/* ✅ Two side-by-side buttons */}
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2 text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
+          >
+            Open Application Form
+          </a>
+
+          <a
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2 text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
+          >
+            Open Application Form
+          </a>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-3 mb-3">
