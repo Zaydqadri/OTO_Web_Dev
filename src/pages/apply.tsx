@@ -28,28 +28,29 @@
         <p>Jazakallahu Khair.</p>
 
         {/* ✅ Two side-by-side buttons */}
-        <div className="mt-4 flex flex-wrap gap-3">
-          <a
-            href={link}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2 text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
-          >
-            Open Application Form
-          </a>
+<div className="mt-6 flex flex-col items-center gap-4">
+  <a
+    href="https://forms.gle/jE1vAGhyV41VpuBh6"
+    target="_blank"
+    rel="noreferrer"
+    className="w-full max-w-xs text-center inline-flex justify-center items-center gap-2 rounded-lg bg-[var(--brand)] px-6 py-3 text-lg text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
+  >
+    Sign up as a Hafidh
+  </a>
 
-          <a
-            href={link}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2 text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
-          >
-            Open Application Form
-          </a>
-        </div>
+  <a
+    href="https://forms.gle/nrfsMoX8RGZ1uqBD8"
+    target="_blank"
+    rel="noreferrer"
+    className="w-full max-w-xs text-center inline-flex justify-center items-center gap-2 rounded-lg border border-[var(--brand)] bg-white text-[var(--brand)] text-lg font-semibold px-6 py-3 hover:bg-[var(--brand)]/10 transition-colors"
+  >
+    Submit a listing as a Masjid/Musallah
+  </a>
+</div>
+
       </div>
 
-      <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-3 mb-3">
+      {/* <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-3 mb-3">
         <div className="aspect-[3/4] w-full overflow-hidden rounded-xl ring-1 ring-[var(--ring)]/40">
           <iframe
             title="Application Form"
@@ -64,7 +65,8 @@
             Open the form in a new tab
           </a>.
         </p>
-      </div>
+      </div> */}
+
     </section>
   );
 }
