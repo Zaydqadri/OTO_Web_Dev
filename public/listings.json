@@ -27,7 +27,7 @@
         "contactNumber": "Coordinator",
         "contactEmail": "c@example.com",
         "available": "Filled",
-        "approved": true
+        "approved": false
     },
     {
         "title": "Islamic Centre of Cambridge",
