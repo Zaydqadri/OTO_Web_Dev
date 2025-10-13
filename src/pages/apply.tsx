@@ -26,30 +26,30 @@
         </p>
         <br />
         <p>Jazakallahu Khair.</p>
-         </div>
+      </div>
 
-        {/* ✅ Two side-by-side buttons */}
-<div className="mt-6 flex flex-col items-center gap-4">
-  <a
-    href="https://forms.gle/jE1vAGhyV41VpuBh6"
-    target="_blank"
-    rel="noreferrer"
-    className="w-full max-w-xs text-center inline-flex justify-center items-center gap-2 rounded-lg bg-[var(--brand)] px-6 py-3 text-lg text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
-  >
-    Sign up as a Hafidh
-  </a>
+      <div className="mt-6 flex flex-col sm:flex-row sm:justify-center gap-4">
+        <a
+          href="https://forms.gle/jE1vAGhyV41VpuBh6"
+          target="_blank"
+          rel="noreferrer"
+          className="w-full sm:flex-1 sm:w-auto sm:min-w-[260px] text-center inline-flex justify-center items-center gap-2 rounded-lg bg-[var(--brand)] px-6 py-3 text-lg text-white font-semibold hover:bg-[var(--brand-700)] transition-colors"
+        >
+          Sign up as a Hafidh
+        </a>
 
-  <a
-    href="https://forms.gle/nrfsMoX8RGZ1uqBD8"
-    target="_blank"
-    rel="noreferrer"
-    className="w-full max-w-xs text-center inline-flex justify-center items-center gap-2 rounded-lg border border-[var(--brand)] bg-white text-[var(--brand)] text-lg font-semibold px-6 py-3 hover:bg-[var(--brand)]/10 transition-colors"
-  >
-    Submit a listing as a Masjid/Musallah
-  </a>
-</div>
+        <a
+          href="https://forms.gle/nrfsMoX8RGZ1uqBD8"
+          target="_blank"
+          rel="noreferrer"
+          className="w-full sm:flex-1 sm:w-auto sm:min-w-[260px] text-center inline-flex justify-center items-center gap-2 rounded-lg border border-[var(--brand)] bg-white text-[var(--brand)] text-lg font-semibold px-6 py-3 hover:bg-[var(--brand)]/10 transition-colors"
+        >
+          Submit a listing as a Masjid/Musallah
+        </a>
+      </div>
 
-     
+
+
 
       {/* <div className="rounded-2xl border border-[color:rgb(0_0_0_/_0.15)] bg-white p-3 mb-3">
         <div className="aspect-[3/4] w-full overflow-hidden rounded-xl ring-1 ring-[var(--ring)]/40">
