@@ -19,7 +19,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           name="description"
           content="Connecting Huffadh and Masajid across Ontario and beyond."
         />
-        <link rel="icon" href="/OTOFaviconNew.png" />
+
+        <link rel="icon" href="/favicon.png" />
+
         <meta name="theme-color" content="#021733" />
       </Head>
 
