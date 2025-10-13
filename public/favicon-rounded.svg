@@ -1,0 +1,18 @@
+<!-- favicon.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- circular brand background -->
+  <circle cx="256" cy="256" r="256" fill="#021733"/>
+  <!-- circular clip path -->
+  <defs>
+    <clipPath id="roundClip">
+      <circle cx="256" cy="256" r="230"/>
+    </clipPath>
+  </defs>
+  <!-- embedded logo (replace /logo.jpeg with your logo path) -->
+  <image href="/logo.jpeg"
+         x="60" y="60" width="392" height="392"
+         preserveAspectRatio="xMidYMid slice"
+         clip-path="url(#roundClip)"/>
+  <!-- white border -->
+  <circle cx="256" cy="256" r="250" fill="none" stroke="white" stroke-width="8" opacity="0.4"/>
+</svg>
