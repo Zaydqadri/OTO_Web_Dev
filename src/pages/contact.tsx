@@ -61,7 +61,7 @@ export default function ContactPage() {
           href="https://chat.whatsapp.com/CRaq2olTvFs5Ipo1WaMuDA?mode=wwc"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-white border border-[var(--brand)] text-[var(--brand)] text-md font-semibold hover:bg-[var(--brand)]/10 transition-colors"
+          className="w-full inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-white border border-[var(--brand)] text-[var(--brand)] text-md font-semibold hover:bg-[var(--brand-50)] transition-colors"
         >
           <img
             src="/whatsapp.svg"
