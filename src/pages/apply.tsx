@@ -42,7 +42,7 @@
           href="https://forms.gle/nrfsMoX8RGZ1uqBD8"
           target="_blank"
           rel="noreferrer"
-          className="w-full sm:flex-1 sm:w-auto sm:min-w-[260px] text-center inline-flex justify-center items-center gap-2 rounded-lg border border-[var(--brand)] bg-white text-[var(--brand)] text-lg font-semibold px-6 py-3 hover:bg-[var(--brand)]/10 transition-colors"
+          className="w-full sm:flex-1 sm:w-auto sm:min-w-[260px] text-center inline-flex justify-center items-center gap-2 rounded-lg border border-[var(--brand)] bg-white text-[var(--brand)] text-lg font-semibold px-6 py-3 hover:bg-[var(--brand-50)] transition-colors"
         >
           Submit a listing as a Masjid/Musallah
         </a>
