@@ -22,6 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" href="/favicon.png" />
 
+        <link rel="icon" href="/favicon.png" />
         <meta name="theme-color" content="#021733" />
       </Head>
 
