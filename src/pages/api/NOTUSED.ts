@@ -10,22 +10,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const data: Listing[] = [
     {
-      title: "Test", //required
-      description: "Test", //required
-      address: "Test", //required
-      category: "Test", // Taraweeh, Jummah, Teaching
-      city: "Test", //required
-      notes: "Test",
-      attendance: "Test",
-      accommodations: "Test", //Lodging, Meals, Travel
-      startDate: "Test",
-      endDate:"Test",
-      contactNumber: "Test",
-      contactEmail: "Test", 
-      available: "Filled", // Open, Filled required by admin
-      approved: false // required by admin, if false, it will hide it on website
-    },
-    {
       title: "Hafidh Needed",
       description: "Looking for a reliable ḥāfiẓ to lead Tarāwīḥ for Ramadan. Accommodation and meals provided.",
       address: "Masjid",
