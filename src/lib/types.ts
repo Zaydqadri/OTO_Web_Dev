@@ -2,7 +2,7 @@
   title: string;
   description: string;            
   address: string;
-  category: "Taraweeh" | "Jummah" | "Teaching" | string;
+  category: "Taraweeh" | "Qiyaam" | "Jummah" | "Imam" | "Teaching";
   city: string;
   notes?: string;
   attendance?: string;

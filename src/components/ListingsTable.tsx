@@ -7,9 +7,18 @@ import Link from "next/link";
 type SortKey = keyof Listing;
 type Sort = { key: SortKey; dir: "asc" | "desc" };
 
+// Category chip palette (avoid green/red which are for status)
+const CAT = {
+  Taraweeh: "border-indigo-300 text-indigo-700 bg-indigo-50",
+  Qiyaam:   "border-violet-300 text-violet-700 bg-violet-50",
+  Jummah:   "border-amber-300  text-amber-700  bg-amber-50",
+  Teaching: "border-sky-300    text-sky-700    bg-sky-50",
+  Imam:   "border-teal-300   text-teal-700   bg-teal-50", // new
+};
 const chip = "inline-flex items-center rounded-full border px-2 py-0.5 text-xs";
 
-export default function ListingsTable({ category }: { category?: string }) {
+export default function ListingsTable({ category, categories }: { category?: string; categories?: string[] }
+) {
   const [rows, setRows] = useState<Listing[]>([]);
   const [q, setQ] = useState("");
   const [acc, _setAcc] = useState("All");
@@ -32,21 +41,19 @@ export default function ListingsTable({ category }: { category?: string }) {
     return () => { alive = false; };
   }, []);
 
+  // Source set: filter by one or many categories (if supplied)
+  const baseRows = useMemo(() => {
+    if (categories?.length) {
+      const set = new Set(categories.map(c => c.toLowerCase()));
+      return rows.filter(r => set.has((r.category ?? "").toLowerCase()));
+    }
+    if (category) {
+      return rows.filter(r => (r.category ?? "").toLowerCase() === category.toLowerCase());
+    }
+    return rows;
+  }, [rows, category, categories]);
 
-
-
-  // options
-  const baseRows = useMemo(
-    () =>
-      category
-        ? rows.filter(
-          r => (r.category || "").toLowerCase() === category.toLowerCase()
-        )
-        : rows,
-    [rows, category]
-  );
-
-  // filtering + sorting
+  // Text + accommodations filter + sort
   const filtered = useMemo(() => {
     const t = q.toLowerCase();
     return baseRows
@@ -65,13 +72,9 @@ export default function ListingsTable({ category }: { category?: string }) {
       .sort((a, b) => {
         const A = (a[sort.key] ?? "").toString().toLowerCase();
         const B = (b[sort.key] ?? "").toString().toLowerCase();
-        return sort.dir === "asc" ? A.localeCompare(B) : B.localeCompare(A);
+        return A.localeCompare(B);
       });
   }, [baseRows, q, acc, sort]);
-
-
-  // const toggleSort = (key: SortKey) =>
-  //   setSort(s => (s.key === key ? { key, dir: s.dir === "asc" ? "desc" : "asc" } : { key, dir: "asc" }));
 
   return (
     <section className="mx-auto max-w-6xl">
@@ -79,27 +82,10 @@ export default function ListingsTable({ category }: { category?: string }) {
       <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-3">
         <input
           className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-3 py-2 max-w-70 focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
-          placeholder={`Search ${category ? category : "listings"}…`}
+          placeholder={`Search ${categories?.length ? categories[0] : (category ?? "listings")}…`}
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
-
-
-        {/* optional sorter */}
-        {/* <div className="ml-auto flex items-center gap-2 text-sm">
-          <span className="text-[var(--muted)]">Sort by</span>
-          <select
-            className="border border-[color:rgb(0_0_0_/_0.12)] rounded-xl px-2 py-1"
-            value={String(sort.key)}
-            onChange={(e) => toggleSort(e.target.value as SortKey)}
-          >
-            <option value="city">City</option>
-            <option value="startDate">Start Date</option>
-            <option value="title">Title</option>
-          </select>
-
-        </div> */}
-
         <div className="w-full py-2 flex sm:justify-end justify-start">
           <Link
             href="/apply"
@@ -115,59 +101,38 @@ export default function ListingsTable({ category }: { category?: string }) {
         {filtered.map((r, i) => (
           <details key={i} className="group rounded-2xl border border-[color:rgb(0_0_0_/_0.06)] bg-white">
             <summary className="cursor-pointer list-none p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 [&::-webkit-details-marker]:hidden">
-              {/* Top row: arrow + title */}
               <div className="flex items-center gap-2">
-                {/* Expand icon */}
                 <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[var(--muted)]/30 text-[var(--muted)] transition-transform duration-300 group-open:rotate-180">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-4 w-4"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
-                      clipRule="evenodd"
-                    />
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                   </svg>
                 </span>
-
-                {/* Title • City */}
                 <span className="font-semibold text-[var(--ink)]">
                   {r.title}{r.city ? ` • ${r.city}` : ""}
                 </span>
               </div>
 
-              {/* Second line (mobile): chips */}
+              {/* Chips */}
               <div className="flex flex-wrap gap-2 mt-2 sm:mt-0 sm:ml-3">
                 {r.category && (
-                  <span className={`${chip} border-[var(--brand)]/30 text-[var(--brand)] bg-[var(--brand-50)]/60`}>
+                  <span className={`${chip} ${CAT[r.category as keyof typeof CAT] ?? "border-slate-300 text-slate-700 bg-slate-50"}`}>
                     {r.category}
                   </span>
                 )}
                 {r.available && (
-                  <span
-                    className={`${chip} ${r.available === "Open"
+                  <span className={`${chip} ${
+                    r.available === "Open"
                       ? "border-green-500 text-green-700 bg-green-50"
                       : "border-red-500 text-red-700 bg-red-50"
-                      }`}
-                  >
+                  }`}>
                     {r.available === "Open" ? "Open" : "Filled"}
                   </span>
                 )}
               </div>
             </summary>
 
-
-
             <div className="px-4 sm:px-5 pb-5 pt-0 text-[var(--ink)]/90">
-              {/* Description */}
-              {r.description && (
-                <p className="mb-3">{r.description}</p>
-              )}
-
-              {/* Meta grid */}
+              {r.description && <p className="mb-3">{r.description}</p>}
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 <Field label="Address" value={r.address} />
                 <Field label="Average Attendance" value={r.attendance} />
@@ -182,10 +147,7 @@ export default function ListingsTable({ category }: { category?: string }) {
                         <>
                           {r.contactNumber && <div>{r.contactNumber}</div>}
                           {r.contactEmail && (
-                            <a
-                              className="underline text-[var(--brand)]"
-                              href={`mailto:${r.contactEmail}`}
-                            >
+                            <a className="underline text-[var(--brand)]" href={`mailto:${r.contactEmail}`}>
                               {r.contactEmail}
                             </a>
                           )}
@@ -198,9 +160,6 @@ export default function ListingsTable({ category }: { category?: string }) {
                     }
                   />
                 )}
-
-
-
               </div>
             </div>
           </details>
@@ -214,25 +173,19 @@ export default function ListingsTable({ category }: { category?: string }) {
               <Link href="/apply" className="underline text-[var(--brand)]">this page</Link>.
             </p>
           </div>
-
         )}
       </div>
     </section>
   );
 }
 
-/** helpers */
 type FieldProps = { label: string; value?: ReactNode };
-
-// Returns null (renders nothing) if the value is empty/blank
 function Field({ label, value }: FieldProps) {
   const isEmpty =
     value == null ||
     (typeof value === "string" && value.trim() === "") ||
     (Array.isArray(value) && value.length === 0);
-
   if (isEmpty) return null;
-
   return (
     <div className="rounded-xl border border-[color:rgb(0_0_0_/_0.06)] p-3 bg-white">
       <div className="text-xs font-semibold text-[var(--muted)]">{label}</div>
@@ -241,14 +194,11 @@ function Field({ label, value }: FieldProps) {
   );
 }
 
-
 function fmtDate(d?: string) {
   if (!d) return "";
-  // Expecting "YYYY-MM-DD"
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d);
   if (!m) return d;
   const [, y, mm, dd] = m;
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const monthName = months[Number(mm) - 1] ?? mm;
-  return `${monthName} ${Number(dd)}, ${y}`;
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${months[Number(mm) - 1] ?? mm} ${Number(dd)}, ${y}`;
 }

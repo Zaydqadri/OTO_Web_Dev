@@ -4,7 +4,7 @@ export default function TeachingListingsPage() {
   return (
     <section>
       <h1 className="text-2xl font-bold text-[var(--brand)] mb-4">Taraweeh Listings</h1>
-      <ListingsTable category="Taraweeh" />
+      <ListingsTable categories={["Taraweeh", "Qiyaam"]} />
     </section>
   );
 }
