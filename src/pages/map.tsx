@@ -8,8 +8,8 @@ export default function MapPage() {
             <h1 className="text-3xl font-bold text-[var(--brand)] mb-3">
                 Masjid & Musallah Map
             </h1>
-            <p className="text-[var(--muted)] mb-6 max-w-2xl">
-                Find nearby masājid, musallās, and madāris across Ontario. You can open
+            <p className="text-[var(--muted)] mb-6 max-w-5xl">
+                Find nearby masaajid, musallahs, and madaaris across Ontario. You can open
                 directions in Google Maps to see those closest to you.
             </p>
             <MapView />

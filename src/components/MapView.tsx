@@ -9,13 +9,11 @@ import type { FeatureCollection, Feature, Point } from "geojson";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Lazy-load React-Leaflet components
 const MapContainer = dynamic(async () => (await import("react-leaflet")).MapContainer, { ssr: false });
 const TileLayer = dynamic(async () => (await import("react-leaflet")).TileLayer, { ssr: false });
 const Marker = dynamic(async () => (await import("react-leaflet")).Marker, { ssr: false });
 const Popup = dynamic(async () => (await import("react-leaflet")).Popup, { ssr: false });
 
-// Default marker image paths (in /public/leaflet)
 L.Icon.Default.mergeOptions({
     iconUrl: "/leaflet/marker-icon.png",
     iconRetinaUrl: "/leaflet/marker-icon-2x.png",
@@ -34,11 +32,10 @@ type Place = {
     website?: string;
 };
 
-// Category colors (avoid green/red used for Open/Filled)
 const TYPE_COLOR: Record<PlaceType, string> = {
-    Masjid: "#0ea5e9", // sky
-    Musallah: "#a855f7", // purple
-    Madrasah: "#eab308"  // amber
+    Masjid: "#0ea5e9",
+    Musallah: "#a855f7",
+    Madrasah: "#eab308"
 };
 
 function SetMapRef({ onReady }: { onReady: (m: L.Map) => void }) {
@@ -47,13 +44,95 @@ function SetMapRef({ onReady }: { onReady: (m: L.Map) => void }) {
     return null;
 }
 
+function normPos(pos: LatLngExpression): [number, number] {
+    return Array.isArray(pos) ? [pos[0], pos[1]] : [(pos as any).lat, (pos as any).lng];
+}
+
+function haversineKm(a: [number, number], b: [number, number]) {
+    const R = 6371;
+    const dLat = (b[0] - a[0]) * Math.PI / 180;
+    const dLng = (b[1] - a[1]) * Math.PI / 180;
+    const la1 = a[0] * Math.PI / 180, la2 = b[0] * Math.PI / 180;
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+function toTuple(pos: L.LatLngExpression): [number, number] {
+    if (Array.isArray(pos)) {
+        const [lat, lng] = pos as [number, number];
+        return [lat, lng];
+    }
+    const p = pos as L.LatLng;
+    return [p.lat, p.lng];
+}
+
 
 export default function MapView() {
     const [places, setPlaces] = useState<Place[]>([]);
     const [userPos, setUserPos] = useState<LatLngExpression | null>(null);
     const mapRef = useRef<L.Map | null>(null);
 
-    // 1️⃣ Load GeoJSON (FeatureCollection)
+    const highlightsRef = useRef<L.LayerGroup | null>(null);
+    const [panelOpen, setPanelOpen] = useState(true);
+
+    const nearest3 = useMemo(() => {
+        if (!userPos || !places.length) return [];
+        const u = normPos(userPos);
+        return [...places]
+            .map(p => ({ p, d: haversineKm(u, [p.lat, p.lng]) }))
+            .sort((a, b) => a.d - b.d)
+            .slice(0, 3);
+    }, [userPos, places]);
+
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!map || !userPos || nearest3.length === 0) return;
+
+        const uPair = toTuple(userPos);
+        const u = L.latLng(uPair[0], uPair[1]);
+        const pts = nearest3.map(({ p }) => L.latLng(p.lat, p.lng));
+        const bounds = L.latLngBounds([L.latLng(uPair[0], uPair[1]), ...pts]).pad(0.2);
+
+        map.fitBounds(bounds);
+
+        if (!highlightsRef.current) {
+            highlightsRef.current = L.layerGroup().addTo(map);
+        } else {
+            highlightsRef.current.clearLayers();
+        }
+        nearest3.forEach(({ p }) => {
+            L.circleMarker([p.lat, p.lng], {
+                radius: 8,
+                color: "#021733",
+                weight: 2,
+                fillColor: "#ffffff",
+                fillOpacity: 1
+            }).addTo(highlightsRef.current!);
+        });
+
+        const html = `
+    <div style="font-weight:600;margin-bottom:6px;color:#021733">
+      Here are your three closest locations
+    </div>
+    <ol style="padding-left:18px;margin:0;line-height:1.35">
+      ${nearest3.map(({ p, d }) => `
+        <li style="margin:4px 0">
+          <div style="font-weight:600;color:#0f172a">${p.name}</div>
+          ${p.address ? `<div style="color:#64748b;font-size:12px">${p.address}</div>` : ""}
+          <div style="color:#64748b;font-size:12px">${d.toFixed(1)} km away ·
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}" target="_blank" rel="noreferrer" style="color:#0ea5e9;text-decoration:underline">Directions</a>
+          </div>
+        </li>
+      `).join("")}
+    </ol>
+  `;
+        L.popup({ offset: [0, -8] })
+            .setLatLng(u)
+            .setContent(html)
+            .openOn(map);
+    }, [userPos, nearest3]);
+
+
     useEffect(() => {
         (async () => {
             const r = await fetch(`/locations.json?v=${Date.now()}`, { cache: "no-store" });
@@ -80,7 +159,6 @@ export default function MapView() {
         })();
     }, []);
 
-    // 2️⃣ Automatically get user location & center map
     useEffect(() => {
         if (!("geolocation" in navigator)) return;
         navigator.geolocation.getCurrentPosition(
@@ -88,14 +166,13 @@ export default function MapView() {
                 const coords: LatLngExpression = [pos.coords.latitude, pos.coords.longitude];
                 setUserPos(coords);
                 const map = mapRef.current;
-                if (map) map.setView(coords, 12); // center on user
+                if (map) map.setView(coords, 12);
             },
-            () => { /* ignore errors */ },
+            () => { },
             { enableHighAccuracy: true, maximumAge: 30000, timeout: 10000 }
         );
     }, []);
 
-    // 3️⃣ Default bounds when no user location yet
     const fallbackCenter: LatLngExpression = [43.6532, -79.3832];
     const bounds: LatLngBoundsExpression | null = useMemo(() => {
         if (userPos || !places.length) return null;
@@ -103,7 +180,6 @@ export default function MapView() {
         return b.pad(0.1);
     }, [places, userPos]);
 
-    // Fit bounds when data loads
     useEffect(() => {
         const map = mapRef.current;
         if (!map || !bounds) return;
@@ -116,58 +192,94 @@ export default function MapView() {
                 <div className="text-[var(--ink)] font-semibold">Masjid & Musallah Map</div>
             </div>
 
-            <MapContainer
-                center={fallbackCenter}
-                zoom={9}
-                /* whenReady={(e) => { mapRef.current = e.target; }}  ← remove this line */
-                style={{ height: 520, width: "100%" }}
-            >
-                <SetMapRef onReady={(m) => { mapRef.current = m; }} />
+            <div className="relative">
+                <MapContainer
+                    center={fallbackCenter}
+                    zoom={9}
+                    style={{ height: 520, width: "100%" }}
+                >
+                    <SetMapRef onReady={(m) => { mapRef.current = m; }} />
+                    <TileLayer
+                        attribution='&copy; OpenStreetMap contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
 
-                <TileLayer
-                    attribution='&copy; OpenStreetMap contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+                    {userPos && (
+                        <Marker position={userPos} icon={pinIcon("#ef4444")}>
+                            <Popup>You are here</Popup>
+                        </Marker>
+                    )}
+                    {places.map((p) => (
+                        <Marker key={p.id} position={[p.lat, p.lng]} icon={pinIcon(TYPE_COLOR[p.type] ?? "#64748b")}>
+                            <Popup>
+                                <div className="space-y-1">
+                                    <div className="font-semibold text-[var(--ink)]">{p.name}</div>
+                                    {p.address && <div className="text-sm text-[var(--muted)]">{p.address}</div>}
+                                    {p.notes && <div className="text-sm">{p.notes}</div>}
+                                    <div className="pt-1 flex gap-2">
+                                        <a className="underline text-[var(--brand)]"
+                                            href={`https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`}
+                                            target="_blank" rel="noreferrer">Directions</a>
+                                        {p.website && <a className="underline text-[var(--brand)]" href={p.website} target="_blank" rel="noreferrer">Website</a>}
+                                    </div>
+                                </div>
+                            </Popup>
+                        </Marker>
+                    ))}
+                </MapContainer>
 
-                {/* 🔴 User location marker (red) */}
-                {userPos && (
-                    <Marker position={userPos} icon={pinIcon("#ef4444")}>
-                        <Popup>You are here</Popup>
-                    </Marker>
+                {userPos && nearest3.length > 0 && (
+                    <div className="pointer-events-none absolute top-3 right-3 z-[900] w-full max-w-sm">
+                        <div className="pointer-events-auto rounded-2xl border bg-white/95 backdrop-blur shadow-lg">
+                            <button
+                                type="button"
+                                onClick={() => setPanelOpen(o => !o)}
+                                aria-expanded={panelOpen}
+                                aria-controls="closest-panel"
+                                className="w-full flex items-center justify-between px-3 py-2 text-left hover:bg-[var(--brand-50)]/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+                            >
+                                <span className="text-sm font-semibold text-[var(--ink)]">Closest to you</span>
+                                <svg
+                                    className={`h-4 w-4 text-[var(--muted)] transition-transform ${panelOpen ? "" : "-rotate-90"}`}
+                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                                >
+                                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                                </svg>
+                            </button>
+
+                            {panelOpen && (
+                                <div id="closest-panel" className="px-3 py-3">
+                                    <ul className="space-y-2">
+                                        {nearest3.map(({ p, d }) => (
+                                            <li key={p.id} className="flex items-start justify-between gap-3">
+                                                <div className="min-w-0">
+                                                    <div className="truncate font-medium text-[var(--ink)]">{p.name}</div>
+                                                    {p.address && <div className="truncate text-xs text-[var(--muted)]">{p.address}</div>}
+                                                    <div className="text-xs text-[var(--muted)]">{d.toFixed(1)} km away</div>
+                                                </div>
+                                                <a
+                                                    className="shrink-0 rounded-lg border px-2 py-1 text-xs text-[var(--brand)] hover:bg-[var(--brand-50)]"
+                                                    href={`https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`}
+                                                    target="_blank" rel="noreferrer"
+                                                    title="Open in Google Maps"
+                                                >
+                                                    Directions
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 )}
 
-                {/* 🕌 Masjid/Musallah markers */}
-                {places.map((p) => (
-                    <Marker key={p.id} position={[p.lat, p.lng]} icon={pinIcon(TYPE_COLOR[p.type] ?? "#64748b")}>
-                        <Popup>
-                            <div className="space-y-1">
-                                <div className="font-semibold text-[var(--ink)]">{p.name}</div>
-                                {p.address && <div className="text-sm text-[var(--muted)]">{p.address}</div>}
-                                {p.notes && <div className="text-sm">{p.notes}</div>}
-                                <div className="pt-1 flex gap-2">
-                                    <a
-                                        className="underline text-[var(--brand)]"
-                                        href={`https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`}
-                                        target="_blank" rel="noreferrer"
-                                    >
-                                        Directions
-                                    </a>
-                                    {p.website && (
-                                        <a className="underline text-[var(--brand)]" href={p.website} target="_blank" rel="noreferrer">
-                                            Website
-                                        </a>
-                                    )}
-                                </div>
-                            </div>
-                        </Popup>
-                    </Marker>
-                ))}
-            </MapContainer>
+            </div>
         </div>
+
     );
 }
 
-// 🎨 SVG pin icon generator
 function pinIcon(color: string) {
     const svg = encodeURIComponent(
         `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 48">

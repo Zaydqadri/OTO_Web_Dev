@@ -37,7 +37,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="border-b border-[color:rgb(0_0_0_/_0.06)] bg-white sticky top-0 z-50">
+    <header className="border-b z-[2000] border-[color:rgb(0_0_0_/_0.06)] bg-white sticky top-0 z-50">
       <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
