@@ -44,8 +44,9 @@ function SetMapRef({ onReady }: { onReady: (m: L.Map) => void }) {
     return null;
 }
 
-function normPos(pos: LatLngExpression): [number, number] {
-    return Array.isArray(pos) ? [pos[0], pos[1]] : [(pos as any).lat, (pos as any).lng];
+function normPos(pos: L.LatLngExpression): [number, number] {
+  const p = L.latLng(pos); 
+  return [p.lat, p.lng];
 }
 
 function haversineKm(a: [number, number], b: [number, number]) {
@@ -58,12 +59,8 @@ function haversineKm(a: [number, number], b: [number, number]) {
 }
 
 function toTuple(pos: L.LatLngExpression): [number, number] {
-    if (Array.isArray(pos)) {
-        const [lat, lng] = pos as [number, number];
-        return [lat, lng];
-    }
-    const p = pos as L.LatLng;
-    return [p.lat, p.lng];
+  const p = L.latLng(pos);     // same normalization
+  return [p.lat, p.lng];
 }
 
 
@@ -110,26 +107,8 @@ export default function MapView() {
             }).addTo(highlightsRef.current!);
         });
 
-        const html = `
-    <div style="font-weight:600;margin-bottom:6px;color:#021733">
-      Here are your three closest locations
-    </div>
-    <ol style="padding-left:18px;margin:0;line-height:1.35">
-      ${nearest3.map(({ p, d }) => `
-        <li style="margin:4px 0">
-          <div style="font-weight:600;color:#0f172a">${p.name}</div>
-          ${p.address ? `<div style="color:#64748b;font-size:12px">${p.address}</div>` : ""}
-          <div style="color:#64748b;font-size:12px">${d.toFixed(1)} km away ·
-            <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}" target="_blank" rel="noreferrer" style="color:#0ea5e9;text-decoration:underline">Directions</a>
-          </div>
-        </li>
-      `).join("")}
-    </ol>
-  `;
         L.popup({ offset: [0, -8] })
             .setLatLng(u)
-            .setContent(html)
-            .openOn(map);
     }, [userPos, nearest3]);
 
 
