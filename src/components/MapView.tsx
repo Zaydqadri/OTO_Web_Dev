@@ -184,7 +184,7 @@ export default function MapView() {
             () => {
                 // Don’t spam the user — show the “Enable location” card instead
                 setNeedsUserGesture(true);
-                setGeoMsg("Enable location to see nearby places.");
+                setGeoMsg("Enable location to see the three closest masaajid near you.");
             },
             { enableHighAccuracy: true, maximumAge: 30000, timeout: 8000 }
         );
@@ -299,7 +299,7 @@ export default function MapView() {
                         </div>
                     </div>
                 )}
-                
+
                 {!userPos && (
                     <div
                         className="
@@ -323,10 +323,7 @@ export default function MapView() {
 
                             <div className="px-3 pb-3">
                                 <p className="text-sm text-[var(--muted)]">
-                                    {geoMsg ?? "Turn on location to see the three closest masājid near you."}
-                                </p>
-                                <p className="mt-2 text-xs text-[var(--muted)]">
-                                    Tip: Make sure you’re on HTTPS and allow location in your browser’s settings.
+                                    {geoMsg}
                                 </p>
                             </div>
                         </div>
