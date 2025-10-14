@@ -45,8 +45,8 @@ function SetMapRef({ onReady }: { onReady: (m: L.Map) => void }) {
 }
 
 function normPos(pos: L.LatLngExpression): [number, number] {
-  const p = L.latLng(pos); 
-  return [p.lat, p.lng];
+    const p = L.latLng(pos);
+    return [p.lat, p.lng];
 }
 
 function haversineKm(a: [number, number], b: [number, number]) {
@@ -59,8 +59,8 @@ function haversineKm(a: [number, number], b: [number, number]) {
 }
 
 function toTuple(pos: L.LatLngExpression): [number, number] {
-  const p = L.latLng(pos);     // same normalization
-  return [p.lat, p.lng];
+    const p = L.latLng(pos);
+    return [p.lat, p.lng];
 }
 
 
@@ -171,7 +171,7 @@ export default function MapView() {
                 <div className="text-[var(--ink)] font-semibold">Masjid & Musallah Map</div>
             </div>
 
-            <div className="relative">
+            <div className="relative z-0">
                 <MapContainer
                     center={fallbackCenter}
                     zoom={9}
@@ -208,8 +208,8 @@ export default function MapView() {
                 </MapContainer>
 
                 {userPos && nearest3.length > 0 && (
-                    <div className="pointer-events-none absolute top-3 right-3 z-[900] w-full max-w-sm">
-                        <div className="pointer-events-auto rounded-2xl border bg-white/95 backdrop-blur shadow-lg">
+                    <div className="pointer-events-none absolute top-3 right-3 z-[900] w-[clamp(200px,80%,420px)]">
+                        <div className="pointer-events-auto rounded-2xl border bg-white/95 backdrop-blur shadow-lg overflow-hidden">
                             <button
                                 type="button"
                                 onClick={() => setPanelOpen(o => !o)}
@@ -232,9 +232,17 @@ export default function MapView() {
                                         {nearest3.map(({ p, d }) => (
                                             <li key={p.id} className="flex items-start justify-between gap-3">
                                                 <div className="min-w-0">
-                                                    <div className="truncate font-medium text-[var(--ink)]">{p.name}</div>
-                                                    {p.address && <div className="truncate text-xs text-[var(--muted)]">{p.address}</div>}
-                                                    <div className="text-xs text-[var(--muted)]">{d.toFixed(1)} km away</div>
+                                                    <div className="truncate font-medium text-[var(--ink)] text-sm">
+                                                        {p.name}
+                                                    </div>
+                                                    {p.address && (
+                                                        <div className="truncate text-xs text-[var(--muted)]">
+                                                            {p.address}
+                                                        </div>
+                                                    )}
+                                                    <div className="text-xs text-[var(--muted)]">
+                                                        {d.toFixed(1)} km away
+                                                    </div>
                                                 </div>
                                                 <a
                                                     className="shrink-0 rounded-lg border px-2 py-1 text-xs text-[var(--brand)] hover:bg-[var(--brand-50)]"
@@ -252,6 +260,8 @@ export default function MapView() {
                         </div>
                     </div>
                 )}
+
+
 
             </div>
         </div>
