@@ -72,6 +72,35 @@ export default function MapView() {
     const highlightsRef = useRef<L.LayerGroup | null>(null);
     const [panelOpen, setPanelOpen] = useState(true);
 
+    // prompt to enable location if auto-get fails or device location is off
+    const [needsUserGesture, setNeedsUserGesture] = useState(false);
+    const [geoMsg, setGeoMsg] = useState<string | null>(null);
+
+    const requestLocation = () => {
+        if (!("geolocation" in navigator)) {
+            setGeoMsg("Location not supported on this device.");
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const coords: LatLngExpression = [pos.coords.latitude, pos.coords.longitude];
+                setUserPos(coords);
+                mapRef.current?.setView(coords, 12);
+                setNeedsUserGesture(false);
+                setGeoMsg(null);
+            },
+            (err) => {
+                setNeedsUserGesture(true);
+                setGeoMsg(
+                    err.code === err.PERMISSION_DENIED
+                        ? "Location permission is blocked. Enable it in your browser settings and try again."
+                        : "We couldn't get your location. Please try again."
+                );
+            },
+            { enableHighAccuracy: true, maximumAge: 30000, timeout: 10000 }
+        );
+    };
+
     const nearest3 = useMemo(() => {
         if (!userPos || !places.length) return [];
         const u = normPos(userPos);
@@ -139,18 +168,28 @@ export default function MapView() {
     }, []);
 
     useEffect(() => {
-        if (!("geolocation" in navigator)) return;
+        if (!("geolocation" in navigator)) {
+            setGeoMsg("Location not supported on this device.");
+            return;
+        }
+
         navigator.geolocation.getCurrentPosition(
             (pos) => {
                 const coords: LatLngExpression = [pos.coords.latitude, pos.coords.longitude];
                 setUserPos(coords);
-                const map = mapRef.current;
-                if (map) map.setView(coords, 12);
+                mapRef.current?.setView(coords, 12);
+                setNeedsUserGesture(false);
+                setGeoMsg(null);
             },
-            () => { },
-            { enableHighAccuracy: true, maximumAge: 30000, timeout: 10000 }
+            () => {
+                // Don’t spam the user — show the “Enable location” card instead
+                setNeedsUserGesture(true);
+                setGeoMsg("Enable location to see nearby places.");
+            },
+            { enableHighAccuracy: true, maximumAge: 30000, timeout: 8000 }
         );
     }, []);
+
 
     const fallbackCenter: LatLngExpression = [43.6532, -79.3832];
     const bounds: LatLngBoundsExpression | null = useMemo(() => {
@@ -257,6 +296,39 @@ export default function MapView() {
                                     </ul>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                )}
+                
+                {!userPos && (
+                    <div
+                        className="
+      pointer-events-none absolute top-3 right-3 z-[900]
+      w-[clamp(200px,40%,420px)]
+    "
+                    >
+                        <div className="pointer-events-auto rounded-2xl border bg-white/95 backdrop-blur shadow-lg overflow-hidden">
+                            <button
+                                type="button"
+                                onClick={requestLocation}
+                                className="w-full flex items-center justify-between px-3 py-2 text-left hover:bg-[var(--brand-50)]/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+                            >
+                                <span className="text-sm font-semibold text-[var(--ink)]">
+                                    Enable location
+                                </span>
+                                <svg className="h-4 w-4 text-[var(--muted)]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2.25a.75.75 0 01.75.75v2.26a6.75 6.75 0 016 6h2.25a.75.75 0 010 1.5H18.75a6.75 6.75 0 01-6 6v2.25a.75.75 0 01-1.5 0V18.75a6.75 6.75 0 01-6-6H2.25a.75.75 0 010-1.5H4.5a6.75 6.75 0 016-6V3a.75.75 0 01.75-.75zm0 5.25a4.5 4.5 0 100 9 4.5 4.5 0 000-9z" />
+                                </svg>
+                            </button>
+
+                            <div className="px-3 pb-3">
+                                <p className="text-sm text-[var(--muted)]">
+                                    {geoMsg ?? "Turn on location to see the three closest masājid near you."}
+                                </p>
+                                <p className="mt-2 text-xs text-[var(--muted)]">
+                                    Tip: Make sure you’re on HTTPS and allow location in your browser’s settings.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )}
